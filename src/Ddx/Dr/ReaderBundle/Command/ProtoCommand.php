@@ -3,15 +3,17 @@
 /**
  * Description of ProtoCommand
  * ProtoCommand.php - UTF-8
- * @author Allan IRDEL <a.irdel@plan-immobilier.fr>
+ * @author Allan IRDEL <>
  */
 
-namespace Back\CommonBundle\Command;
+namespace Ddx\Dr\ReaderBundle\Command;
 
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+
+use Payward\KrakenAPI;
 
 class ProtoCommand extends \Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand {
 
@@ -28,7 +30,7 @@ class ProtoCommand extends \Symfony\Bundle\FrameworkBundle\Command\ContainerAwar
      * @param OutputInterface $output
      */
     public function execute(InputInterface $input, OutputInterface $output) {
-        $kraken = new \Payward\KrakenAPI($key, $secret);
+        $kraken = new KrakenAPI(null, null);
 
         
     }
