@@ -1,0 +1,4 @@
+services:
+#    ddx_dr_reader.example:
+#        class: Ddx\Dr\ReaderBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
