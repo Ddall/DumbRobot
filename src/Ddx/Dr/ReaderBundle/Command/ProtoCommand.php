@@ -3,19 +3,21 @@
 /**
  * Description of ProtoCommand
  * ProtoCommand.php - UTF-8
- * @author Allan IRDEL <>
+ * @author Allan IRDEL
  */
 
 namespace Ddx\Dr\ReaderBundle\Command;
 
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 use Payward\KrakenAPI;
+use Ddx\Dr\ReaderBundle\Market\KrakenApiWrapper;
 
-class ProtoCommand extends \Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand {
+class ProtoCommand extends ContainerAwareCommand {
 
     protected function configure() {
         $this
@@ -30,8 +32,11 @@ class ProtoCommand extends \Symfony\Bundle\FrameworkBundle\Command\ContainerAwar
      * @param OutputInterface $output
      */
     public function execute(InputInterface $input, OutputInterface $output) {
-        $kraken = new KrakenAPI(null, null);
-
+        $kraken = new KrakenApiWrapper($this->getContainer());
+        
+        $time = $kraken->getTradingPairs();
+        
+        $output->writeln(print_r($time, true));
         
     }
 }

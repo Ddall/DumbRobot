@@ -1,0 +1,4 @@
+services:
+#    dr_ddx_market.example:
+#        class: Dr\Ddx\MarketBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

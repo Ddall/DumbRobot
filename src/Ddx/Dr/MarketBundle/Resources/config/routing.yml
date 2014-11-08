@@ -1,0 +1,3 @@
+ddx_dr_market_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: DdxDrMarketBundle:Default:index }
