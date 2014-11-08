@@ -17,7 +17,7 @@ abstract class AbstractMarket extends \Symfony\Component\DependencyInjection\Con
     /**
      * @param ContainerInterface $container
      */
-    public function __construct(ContainerInterface $container) {
+    protected function __construct(ContainerInterface $container) {
         $this->setContainer($container);
     }
     
