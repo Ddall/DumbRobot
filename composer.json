@@ -1,8 +1,8 @@
 {
-    "name": "symfony/framework-standard-edition",
+    "name": "ddall/ddxDumbRobot",
     "license": "MIT",
     "type": "project",
-    "description": "The \"Symfony Standard Edition\" distribution",
+    "description": "A completly dumb Bitcoin trading bot",
     "autoload": {
         "psr-0": { "": "src/", "SymfonyStandard": "app/" }
     },
