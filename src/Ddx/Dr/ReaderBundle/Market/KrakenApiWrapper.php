@@ -23,12 +23,43 @@ class KrakenApiWrapper extends AbstractMarket{
     protected $container;
 
     /**
-     * @todo Add dependency injection to get api params
+     * __ctor
+     * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container) {
         parent::__construct($container);
         
-        $this->api = new KrakenAPI(null, null);
+        if(!$this->readParameter('kraken.enabled')){
+            throw new Exception('KRAKEN IS NOT ENABLED');
+        }
+        
+        // API LOADING
+        $apikey = $this->readParameter('kraken.api_key');
+        if($apikey === FALSE){
+            $apikey = null;
+        }
+        
+        $secret = $this->readParameter('kraken.secret');
+        if($secret === FALSE){
+            $secret = null;
+        }
+        
+        $url = $this->readParameter('kraken.api_url');
+        if($url === FALSE){
+            $url = 'https://api.kraken.com';
+        }
+        
+        $version = $this->readParameter('kraken.api_version');
+        if($version === FALSE){
+            $version = 0;
+        }
+        
+        $sslVerify = $this->readParameter('kraken.ssl_verify');
+        if($sslVerify === FALSE){
+            $sslVerify = FALSE;
+        }
+
+        $this->api = new KrakenAPI($apikey, $secret, $url, $version, $sslVerify);
     }
 
     /**

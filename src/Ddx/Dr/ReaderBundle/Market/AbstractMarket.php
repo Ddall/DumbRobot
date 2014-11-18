@@ -49,4 +49,19 @@ abstract class AbstractMarket extends \Symfony\Component\DependencyInjection\Con
         
     }
     
+    
+    // TOOLS
+    /**
+     * This functions checks if a parameter is defined in the container and returns it if it exists
+     * if not, returns FALSE
+     * @param type $param
+     * @return boolean|string
+     */
+    public function readParameter($param){
+        if($this->hasParameter($param)){
+            return $this->getParameter($param);
+        }else{
+            return FALSE;
+        }
+    }
 }

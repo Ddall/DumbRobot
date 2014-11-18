@@ -22,14 +22,17 @@ class KrakenMarketService extends AbstractMarketService{
     public function __construct(ContainerInterface $container) {
         parent::__construct($container);
         
+        $this->setApi(new KrakenApiWrapper($container) );
+        
+        
     }
       
-    public function setApi( $api) {
-        parent::setApi($api);
+    public function setApi(KrakenApiWrapper $api) {
+        $this->api = $api
     }
 
     public function refreshMarketHistory(){
-        $this->api->
+//        $this->api->
     }
     
 }
