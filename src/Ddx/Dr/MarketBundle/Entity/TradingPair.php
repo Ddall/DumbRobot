@@ -28,6 +28,12 @@ class TradingPair
      */
     private $name;
 
+        /**
+     * @var string
+     *
+     * @ORM\Column(name="remoteName", type="string", length=50)
+     */
+    private $remoteName;
 
     /**
      * Get id
