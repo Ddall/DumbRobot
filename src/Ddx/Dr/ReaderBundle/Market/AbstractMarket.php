@@ -58,8 +58,8 @@ abstract class AbstractMarket extends \Symfony\Component\DependencyInjection\Con
      * @return boolean|string
      */
     public function readParameter($param){
-        if($this->hasParameter($param)){
-            return $this->getParameter($param);
+        if($this->container->hasParameter($param)){
+            return $this->container->getParameter($param);
         }else{
             return FALSE;
         }
