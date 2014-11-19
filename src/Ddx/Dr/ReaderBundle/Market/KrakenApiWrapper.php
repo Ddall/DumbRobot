@@ -28,38 +28,15 @@ class KrakenApiWrapper extends AbstractMarket{
      */
     public function __construct(ContainerInterface $container) {
         parent::__construct($container);
+        $params = $this->getParameters();
         
-        if(!$this->readParameter('kraken.enabled')){
-            throw new Exception('KRAKEN IS NOT ENABLED');
-        }
-        
-        // API LOADING
-        $apikey = $this->readParameter('kraken.api_key');
-        if($apikey === FALSE){
-            $apikey = null;
-        }
-        
-        $secret = $this->readParameter('kraken.secret');
-        if($secret === FALSE){
-            $secret = null;
-        }
-        
-        $url = $this->readParameter('kraken.api_url');
-        if($url === FALSE){
-            $url = 'https://api.kraken.com';
-        }
-        
-        $version = $this->readParameter('kraken.api_version');
-        if($version === FALSE){
-            $version = 0;
-        }
-        
-        $sslVerify = $this->readParameter('kraken.ssl_verify');
-        if($sslVerify === FALSE){
-            $sslVerify = FALSE;
-        }
-
-        $this->api = new KrakenAPI($apikey, $secret, $url, $version, $sslVerify);
+        $this->api = new KrakenAPI(
+                $params['api_key'],
+                $params['secret'],
+                $params['api_url'],
+                $params['api_version'],
+                $params['ssl_verify']
+            );
     }
 
     /**
@@ -84,7 +61,7 @@ class KrakenApiWrapper extends AbstractMarket{
      * @return array|null
      */
     public function getTradingPairs() {
-        return $this->publicQueryHelper('AssetPairslol');
+        return $this->publicQueryHelper('AssetPairs');
     }
 
     /**
@@ -92,6 +69,24 @@ class KrakenApiWrapper extends AbstractMarket{
      */
     public function getAvailableAssets(){
         return $this->publicQueryHelper('Assets');
+    }
+    
+    
+    /**
+     * 
+     * @param string $since
+     * @return array
+     */
+    public function getHistoryTrades($since){
+        $request = array(
+            'pair' => 'XBTCEUR'
+        );
+        
+        if($since){
+            $request['since'] = $since;
+        }
+
+        return $this->api->QueryPublic('Trades', $request);
     }
     
     /**
@@ -114,4 +109,68 @@ class KrakenApiWrapper extends AbstractMarket{
         return $tmp['result'];
     }
     
+    // HANDLE API LIMITATIONS
+    public function getApiCurrentScore(){
+        return 'NOT IMPLEMENTED';
+    }
+    
+    /**
+     * Adds $count number of points to the api score counter.
+     * Exception is thrown if no score more points are available
+     * @param type $count
+     * @return string
+     * @throws Exception
+     */
+    public function addApiCall($count = 1){
+        if( ($this->getApiCurrentScore() + $count ) > $this->getApiMaxScore() ){
+            throw new Exception('API_LIMIT_EXCEEDED');
+        }
+        
+        return 'NOT_IMPLEMENTED';
+    }
+
+    /**
+     * Returns the point limit on the API
+     * Exceeding this threshold WILL result in a 15min ban from the api
+     * @return string
+     */
+    static function getApiMaxScore(){
+        return '10';
+    }
+    
+    // PARAMETERS
+    /**
+     * Reads the global parameters.yml
+     * @return array
+     * @throws Exception
+     */
+    private function getParameters(){
+        $params = $this->readParameter('kraken');
+        
+        if(!$params && is_array($params) && array_key_exists('enable', $params) && $params['enable'] == true ){
+            throw new Exception('KRAKEN IS NOT ENABLED');
+        }
+        
+        if(!array_key_exists('api_key', $params) || empty($params['api_key'])){
+            $params['api_key'] = null;
+        }
+        
+        if(!array_key_exists('secret', $params) || empty($params['secret'])){
+            $params['secret'] = null;
+        }
+        
+        if(!array_key_exists('api_url', $params) || empty($params['api_url'])){
+            $params['api_url'] = 'https://api.kraken.com';
+        }
+        
+        if(!array_key_exists('api_version', $params) || empty($params['api_version'])){
+            $params['api_version'] = 0;
+        }
+        
+        if(!array_key_exists('ssl_verify', $params) || empty($params['ssl_verify'])){
+            $params['ssl_verify'] = FALSE;
+        }
+        
+        return $params;
+    }
 }
