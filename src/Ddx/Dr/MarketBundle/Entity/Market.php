@@ -36,6 +36,13 @@ class Market
      */
     private $trades;
     
+    /**
+     *
+     * @var TradingPair
+     * @ORM\ManyToMany(targetEntity="Ddx\Dr\MarketBundle\Entity\TradingPair", orphanRemoval=true) 
+     */
+    private $tradingPairs;
+    
     // MANUAL METHODS
     
     
