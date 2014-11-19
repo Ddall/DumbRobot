@@ -18,21 +18,34 @@ class KrakenMarketService extends AbstractMarketService{
      */
     protected $api;
 
-
+    /**
+     * __ctor
+     * @param ContainerInterface $container
+     */
     public function __construct(ContainerInterface $container) {
         parent::__construct($container);
         
-        $this->setApi(new KrakenApiWrapper($container) );
-        
-        
+        $this->setApi( new KrakenApiWrapper($container) );
     }
       
+    /**
+     * @param KrakenApiWrapper $api
+     */
     public function setApi(KrakenApiWrapper $api) {
-        $this->api = $api
+        $this->api = $api;
     }
 
-    public function refreshMarketHistory(){
-//        $this->api->
+    public function updateTradeHistory(){
+        // find the latest trade 
+        
+//        $trades = 
+    }
+    
+    /**
+     * 
+     */
+    private function getTradingRepository(){
+        return $this->getDoctrine()->getManager()->getRepository('DdxDrMarketBundle');
     }
     
 }
