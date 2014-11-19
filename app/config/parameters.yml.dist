@@ -22,3 +22,11 @@ parameters:
     debug_toolbar:          true
     debug_redirects:        false
     use_assetic_controller: true
+
+    # Kraken api parameters
+    kraken:
+        enable: true
+        secret: null
+        api_url: null
+        api_version: 0
+        ssl_verify: false
