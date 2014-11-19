@@ -230,10 +230,10 @@ class Trade
     /**
      * Set market
      *
-     * @param \Ddx\Dr\MarketBundle\Market $market
+     * @param Market $market
      * @return Trade
      */
-    public function setMarket(\Ddx\Dr\MarketBundle\Market $market = null)
+    public function setMarket(Market $market = null)
     {
         $this->market = $market;
 
@@ -243,7 +243,7 @@ class Trade
     /**
      * Get market
      *
-     * @return \Ddx\Dr\MarketBundle\Market 
+     * @return Market
      */
     public function getMarket()
     {
