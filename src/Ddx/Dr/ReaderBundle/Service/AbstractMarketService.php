@@ -33,4 +33,18 @@ abstract class AbstractMarketService extends ContainerAware{
         throw new \ Exception('You must overload AbstractMarket::setApi()');
     }
     
+    /**
+     * @return \Doctrine\ORM\EntityRepository
+     */
+    private function getTradeRepository(){
+        return $this->getDoctrine()->getManager()->getRepository('DdxDrMarketBundle:Trade');
+    }
+    
+    /**
+     * @return \Doctrine\ORM\EntityRepository
+     */
+    private function getTradingPairRepository(){
+        return $this->getDoctrine()->getManager()->getRepository('DdxDrMarketBundle:TradingPair');
+    }
+    
 }

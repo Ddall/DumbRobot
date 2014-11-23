@@ -1,7 +1,6 @@
 <?php
 
 /**
- * Description of ProtoCommand
  * ProtoCommand.php - UTF-8
  * @author Allan IRDEL
  */

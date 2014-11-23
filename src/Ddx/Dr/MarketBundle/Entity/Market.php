@@ -39,7 +39,7 @@ class Market
     /**
      *
      * @var TradingPair
-     * @ORM\ManyToMany(targetEntity="Ddx\Dr\MarketBundle\Entity\TradingPair", orphanRemoval=true) 
+     * @ORM\OneToMany(targetEntity="Ddx\Dr\MarketBundle\Entity\TradingPair", mappedBy="market", orphanRemoval=true)
      */
     private $tradingPairs;
     
@@ -47,6 +47,15 @@ class Market
     
     
     // AUTO METHODS
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->trades = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tradingPairs = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -80,13 +89,6 @@ class Market
     {
         return $this->name;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->trades = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Add trades
@@ -119,5 +121,38 @@ class Market
     public function getTrades()
     {
         return $this->trades;
+    }
+
+    /**
+     * Add tradingPairs
+     *
+     * @param \Ddx\Dr\MarketBundle\Entity\TradingPair $tradingPairs
+     * @return Market
+     */
+    public function addTradingPair(\Ddx\Dr\MarketBundle\Entity\TradingPair $tradingPairs)
+    {
+        $this->tradingPairs[] = $tradingPairs;
+
+        return $this;
+    }
+
+    /**
+     * Remove tradingPairs
+     *
+     * @param \Ddx\Dr\MarketBundle\Entity\TradingPair $tradingPairs
+     */
+    public function removeTradingPair(\Ddx\Dr\MarketBundle\Entity\TradingPair $tradingPairs)
+    {
+        $this->tradingPairs->removeElement($tradingPairs);
+    }
+
+    /**
+     * Get tradingPairs
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTradingPairs()
+    {
+        return $this->tradingPairs;
     }
 }

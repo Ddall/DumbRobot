@@ -51,7 +51,7 @@ class Trade
     private $timeRemote;
 
     /**
-     * @var string
+     * @var string SELL|BUY
      *
      * @ORM\Column(name="orderType", type="string", length=10)
      */
@@ -68,7 +68,7 @@ class Trade
     /**
      * @var Market
      * 
-     * @ORM\ManyToOne(targetEntity="Ddx\Dr\MarketBundle\Market", inversedBy="trades")
+     * @ORM\ManyToOne(targetEntity="Ddx\Dr\MarketBundle\Entity\Market", inversedBy="trades")
      * @ORM\JoinColumn(name="market_id", referencedColumnName="id")
      */
     private $market;
@@ -225,5 +225,28 @@ class Trade
     public function getTradingPair()
     {
         return $this->tradingPair;
+    }
+
+    /**
+     * Set market
+     *
+     * @param Market $market
+     * @return Trade
+     */
+    public function setMarket(Market $market = null)
+    {
+        $this->market = $market;
+
+        return $this;
+    }
+
+    /**
+     * Get market
+     *
+     * @return Market
+     */
+    public function getMarket()
+    {
+        return $this->market;
     }
 }

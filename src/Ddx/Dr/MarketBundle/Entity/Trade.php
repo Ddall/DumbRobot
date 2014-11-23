@@ -51,7 +51,7 @@ class Trade
     private $timeRemote;
 
     /**
-     * @var string
+     * @var string SELL|BUY
      *
      * @ORM\Column(name="orderType", type="string", length=10)
      */
