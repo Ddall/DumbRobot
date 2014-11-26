@@ -56,11 +56,18 @@ class Trade
      * @ORM\Column(name="orderType", type="string", length=10)
      */
     private $orderType;
+    
+    /**
+     * @var string remote id string
+     * @ORM\Column(name="remoteId", type="string", length=255)
+     */
+    private $remoteId;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="tradingPair", type="string", length=25)
+     * @var TradingPair
+     * 
+     * @ORM\ManyToOne(targetEntity="Ddx\Dr\MarketBundle\Entity\TradingPair")
+     * @ORM\JoinColumn(name="tradingPair_id", referencedColumnName="id", nullable=false)
      */
     private $tradingPair;
 
@@ -68,16 +75,19 @@ class Trade
     /**
      * @var Market
      * 
-     * @ORM\ManyToOne(targetEntity="Ddx\Dr\MarketBundle\Entity\Market", inversedBy="trades")
-     * @ORM\JoinColumn(name="market_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Ddx\Dr\MarketBundle\Entity\Market")
+     * @ORM\JoinColumn(name="market_id", referencedColumnName="id", nullable=false)
      */
     private $market;
+    
     
     // MANUAL METHODS
     
     
     
     // AUTO METHODS
+
+  
 
     /**
      * Get id
@@ -207,10 +217,10 @@ class Trade
     /**
      * Set tradingPair
      *
-     * @param string $tradingPair
+     * @param \Ddx\Dr\MarketBundle\Entity\TradingPair $tradingPair
      * @return Trade
      */
-    public function setTradingPair($tradingPair)
+    public function setTradingPair(\Ddx\Dr\MarketBundle\Entity\TradingPair $tradingPair)
     {
         $this->tradingPair = $tradingPair;
 
@@ -220,7 +230,7 @@ class Trade
     /**
      * Get tradingPair
      *
-     * @return string 
+     * @return \Ddx\Dr\MarketBundle\Entity\TradingPair 
      */
     public function getTradingPair()
     {
@@ -230,10 +240,10 @@ class Trade
     /**
      * Set market
      *
-     * @param Market $market
+     * @param \Ddx\Dr\MarketBundle\Entity\Market $market
      * @return Trade
      */
-    public function setMarket(Market $market = null)
+    public function setMarket(\Ddx\Dr\MarketBundle\Entity\Market $market)
     {
         $this->market = $market;
 
@@ -243,7 +253,7 @@ class Trade
     /**
      * Get market
      *
-     * @return Market
+     * @return \Ddx\Dr\MarketBundle\Entity\Market 
      */
     public function getMarket()
     {

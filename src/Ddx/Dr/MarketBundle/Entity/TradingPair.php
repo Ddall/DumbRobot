@@ -41,6 +41,12 @@ class TradingPair
      * @ORM\JoinColumn(name="market_id", referencedColumnName="id")
      */
     private $market;
+    
+    /**
+     * @var boolean
+     * @ORM\Column(name="isActive", type="boolean", nullable=false)
+     */
+    private $isActive;
 
     // MANUAL METHODS
 
@@ -55,6 +61,7 @@ class TradingPair
         $this->setMarket($market);
         $this->setName($name);
         $this->setRemoteName($remoteName);
+        $this->isActive = false;
         return $this;
     }
     
@@ -66,6 +73,28 @@ class TradingPair
         return $this->getName();
     }
 
+    /**
+     * @return boolean
+     */
+    public function isActive(){
+        return $this->isActive;
+    }
+    
+    /**
+     * @return \Ddx\Dr\MarketBundle\Entity\TradingPair
+     */
+    public function enable(){
+        $this->isActive = true;
+        return $this;
+    }
+    
+    /**
+     * @return \Ddx\Dr\MarketBundle\Entity\TradingPair
+     */
+    public function disable(){
+        $this->isActive = false;
+        return $this;
+    }
 
     // AUTO METHODS
 
@@ -146,5 +175,28 @@ class TradingPair
     public function getMarket()
     {
         return $this->market;
+    }
+
+    /**
+     * Set isActive
+     *
+     * @param boolean $isActive
+     * @return TradingPair
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean 
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
     }
 }

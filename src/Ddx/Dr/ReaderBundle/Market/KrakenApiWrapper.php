@@ -7,6 +7,7 @@ namespace Ddx\Dr\ReaderBundle\Market;
 
 use Payward\KrakenAPI;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Ddx\Dr\MarketBundle\Entity\TradingPair;
 use \Exception;
 
 class KrakenApiWrapper extends AbstractMarket{
@@ -73,18 +74,23 @@ class KrakenApiWrapper extends AbstractMarket{
     
     
     /**
-     * 
+     * @param TradingPair $tradingPair
      * @param string $since
      * @return array
      */
-    public function getHistoryTrades($since){
-        $request = array(
-            'pair' => 'XBTCEUR'
-        );
+    public function getTradeHistory(TradingPair $tradingPair = null, $since = null){
+        $request = array();
+        
+        if($tradingPair && !$tradingPair->isActive() ){
+            $request['pair'] = $tradingPair->getRemoteName();
+        }else{
+            $request['pair'] = '';
+        }
         
         if($since){
             $request['since'] = $since;
         }
+        
 
         return $this->api->QueryPublic('Trades', $request);
     }
@@ -112,6 +118,15 @@ class KrakenApiWrapper extends AbstractMarket{
     // HANDLE API LIMITATIONS
     public function getApiCurrentScore(){
         return 'NOT IMPLEMENTED';
+    }
+    
+    /**
+     * Checks if API has at least two hits left
+     * @todo IMPLEMENT THIS
+     * @return boolean
+     */
+    public function hasApiCallleft(){
+        return true;
     }
     
     /**
