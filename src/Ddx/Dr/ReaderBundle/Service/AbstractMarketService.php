@@ -29,22 +29,22 @@ abstract class AbstractMarketService extends ContainerAware{
      * @param AbstractMarket $api
      * @throws Exception
      */
-    protected function setApi(){
-        throw new \ Exception('You must overload AbstractMarket::setApi()');
+//    protected function setApi(AbstractMarket $market){
+//        throw new \ Exception('You must overload AbstractMarket::setApi()');
+//    }
+    
+    /**
+     * @return \Doctrine\ORM\EntityRepository
+     */
+    protected function getTradeRepository(){
+        return $this->container->get('doctrine')->getManager()->getRepository('DdxDrMarketBundle:Trade');
     }
     
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    private function getTradeRepository(){
-        return $this->getDoctrine()->getManager()->getRepository('DdxDrMarketBundle:Trade');
-    }
-    
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    private function getTradingPairRepository(){
-        return $this->getDoctrine()->getManager()->getRepository('DdxDrMarketBundle:TradingPair');
+    protected function getTradingPairRepository(){
+        return $this->container->get('doctrine')->getManager()->getRepository('DdxDrMarketBundle:TradingPair');
     }
     
 }
