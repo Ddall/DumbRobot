@@ -35,11 +35,11 @@ class ProtoCommand extends ContainerAwareCommand {
 //        $data = $kraken->getTradeHistory($);
 //        
         $krakenService  = $this->getContainer()->get('ddx.kraken');
-        $krakenService->updateTradeHistory();
+        $data = $krakenService->updateTradeHistory();
 //        
 //        $data = $krakenService->readMarket();
         
-//        $output->writeln(print_r($data, true));
+        $output->writeln(print_r($data, true));
         
     }
 }

@@ -54,16 +54,15 @@ class KrakenMarketService extends AbstractMarketService{
                     throw new Exception('updateTradeHistory: No results from api. data: ' 
                             . print_r($pairHistory['error'], true));
                 }
-                $entities = array_merge($entities, $this->rawToTrades($pairHistory['result'][$pair->getRemoteName()], $pair, $lastId));
+                $entities = array_merge($entities, $this->rawToTrades($pairHistory['result'][$pair->getRemoteName()], $pair, $pairHistory['result']['last']));
             }
         }
         
         foreach($entities as $e){
             $this->getManager()->persist($e);
-            
         }
         
-        if($dryrun){
+        if(!$dryrun){
             $this->getManager()->flush();
         }
         

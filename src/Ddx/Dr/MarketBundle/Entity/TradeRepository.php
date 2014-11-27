@@ -22,11 +22,13 @@ class TradeRepository extends EntityRepository
     public function getLastTrade(Market $market, TradingPair $pair){
         return $this->createQueryBuilder('t')
                 ->select('t')
-                ->where('t.market = :market_id')
+                ->where('t.remoteId IS NOT null')
+                ->andWhere('t.market = :market_id')
                 ->andWhere('t.tradingPair = :tp_id')
                 ->orderBy('t.id', 'DESC')
                 ->setParameter('market_id', $market->getId() )
                 ->setParameter('tp_id', $pair->getId())
+                ->setMaxResults(1)
                 ->getQuery()->getOneOrNullResult()
                 ;
     }
