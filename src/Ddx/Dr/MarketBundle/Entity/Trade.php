@@ -4,7 +4,6 @@ namespace Ddx\Dr\MarketBundle\Entity;
 
 use Ddx\Dr\MarketBundle\Entity\Market;
 use Doctrine\ORM\Mapping as ORM;
-use Ddx\Dr\ReaderBundle\Market;
 use Ddx\Dr\MarketBundle\Entity\TradingPair;
 
 /**
@@ -41,27 +40,33 @@ class Trade
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="timeLocal", type="datetime")
+     * @ORM\Column(name="timeLocal", type="datetime", nullable=true)
      */
     private $timeLocal;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="timeRemote", type="datetime")
+     * @ORM\Column(name="timeRemote", type="datetime", nullable=true)
      */
     private $timeRemote;
 
     /**
-     * @var string SELL|BUY
+     * @var string MARKET|LIMIT
      *
-     * @ORM\Column(name="orderType", type="string", length=10)
+     * @ORM\Column(name="orderType", type="string", length=10, nullable=true)
      */
     private $orderType;
     
     /**
+     * @var string BUY|SELL
+     * @ORM\Column(name="direction", type="string", length=10, nullable=true)
+     */
+    private $direction;
+    
+    /**
      * @var string remote id string
-     * @ORM\Column(name="remoteId", type="string", length=255)
+     * @ORM\Column(name="remoteId", type="string", length=255, nullable=true)
      */
     private $remoteId;
 
@@ -84,8 +89,19 @@ class Trade
     
     
     // MANUAL METHODS
-    public function __construct(Market $market, TradingPair $tradingPair, $volume, $timeRemote, $remoteId = null) {
-        ;
+    public function __construct() {
+        $this->timeLocal = new \DateTime('now');
+        $this->timeRemote = new \DateTime();
+        return $this;
+    }
+
+    /**
+     * @param string $unixtimestamp
+     * @return \Ddx\Dr\MarketBundle\Entity\Trade
+     */
+    public function setTimeRemoteFromTimestamp($unixtimestamp){
+        $this->timeRemote->setTimestamp($unixtimestamp);
+        return $this;
     }
 
     // AUTO METHODS
@@ -284,5 +300,28 @@ class Trade
     public function getRemoteId()
     {
         return $this->remoteId;
+    }
+
+    /**
+     * Set direction
+     *
+     * @param string $direction
+     * @return Trade
+     */
+    public function setDirection($direction)
+    {
+        $this->direction = $direction;
+
+        return $this;
+    }
+
+    /**
+     * Get direction
+     *
+     * @return string 
+     */
+    public function getDirection()
+    {
+        return $this->direction;
     }
 }
