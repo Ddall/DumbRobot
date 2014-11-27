@@ -3,8 +3,8 @@
 namespace Ddx\Dr\MarketBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
-//use Ddx\Dr\ReaderBundle\Market;
 use Ddx\Dr\MarketBundle\Entity\TradingPair;
+use Ddx\Dr\MarketBundle\Entity\Market;
 
 /**
  * TradeRepository
@@ -16,15 +16,17 @@ class TradeRepository extends EntityRepository
 {
     /**
      * @param Market $market
-     * @param TradingPair $tradingPair
+     * @param TradingPair $pair
      * @return Trade
      */
-    public function getLastTrade(Market $market, TradingPair $tradingPair){
+    public function getLastTrade(Market $market, TradingPair $pair){
         return $this->createQueryBuilder('t')
                 ->select('t')
-                ->where('t.market_id = :m_id')
-                ->andWhere('t.trading')
-                ->setParameter('m_id', $market->getId())
+                ->where('t.market = :market_id')
+                ->andWhere('t.tradingPair = :tp_id')
+                ->orderBy('t.id', 'DESC')
+                ->setParameter('market_id', $market->getId() )
+                ->setParameter('tp_id', $pair->getId())
                 ->getQuery()->getOneOrNullResult()
                 ;
     }
