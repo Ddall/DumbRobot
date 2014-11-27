@@ -81,8 +81,8 @@ class KrakenApiWrapper extends AbstractMarket{
     public function getTradeHistory(TradingPair $tradingPair = null, $since = null){
         $request = array();
         
-        if($tradingPair && !$tradingPair->isActive() ){
-            $request['pair'] = $tradingPair->getRemoteName();
+        if($tradingPair && $tradingPair->isActive() ){
+            $request['pair'] = (string)$tradingPair->getRemoteName();
         }else{
             $request['pair'] = '';
         }
@@ -90,7 +90,6 @@ class KrakenApiWrapper extends AbstractMarket{
         if($since){
             $request['since'] = $since;
         }
-        
 
         return $this->api->QueryPublic('Trades', $request);
     }
