@@ -124,7 +124,7 @@ class KrakenApiWrapper extends AbstractMarket{
      * @todo IMPLEMENT THIS
      * @return boolean
      */
-    public function hasApiCallleft(){
+    public function hasApiCallsLeft(){
         return true;
     }
     
