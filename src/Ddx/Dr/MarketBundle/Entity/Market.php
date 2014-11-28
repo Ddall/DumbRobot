@@ -45,8 +45,25 @@ class Market
     
     // MANUAL METHODS
     
-    
-    // AUTO METHODS
+    /**
+     * @return array Active trading pairs
+     */
+    public function getActiveTradingPairs(){
+        $pairs = array();
+        
+        foreach($this->getTradingPairs() as $pair){
+            if($pair->isActive()){
+                $pairs[$pair->getName()] = $pair;
+            }
+        }
+        
+        return $pairs;
+    }
+
+
+
+
+
 
     /**
      * Constructor
@@ -57,6 +74,8 @@ class Market
         $this->tradingPairs = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    // AUTO METHODS
+    
     /**
      * Get id
      *
