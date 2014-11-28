@@ -17,8 +17,8 @@ class KrakenUpdateTradingPairsCommand extends ContainerAwareCommand{
     public function configure() {
         $this
                 ->setName('kraken:tradingpairs:update')
-                ->setDescription('Updates Trading pairs for Kraken')
-                ->addOption('dryrun', null, InputOption::VALUE_NONE, 'DONT KEEP CHANGES || DONT SEND ANYTHING')
+                ->setDescription('Updates Trading pairs for Kraken' . PHP_EOL . 'Costs 1 point per call')
+                ->addOption('dryrun', null, InputOption::VALUE_NONE, 'DONT KEEP NEW DATA')
         ;
     }
     
