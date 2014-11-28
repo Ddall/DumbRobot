@@ -29,7 +29,7 @@ abstract class AbstractMarketService extends ContainerAware{
      * @param boolean $dryrun
      * @throws \Exception
      */
-    public function updateTradeHistory($dryrun = false){
+    public function updateAllTradeHistory($dryrun = false){
         throw new \ Exception('You must overload AbstractMarket::setApi()');
     }
     
