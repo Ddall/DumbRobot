@@ -34,30 +34,45 @@ class KrakenMarketService extends AbstractMarketService{
      * Call this to update the trade history
      * @return integer Number of new Trades sent to the entityManager
      */
-    public function updateTradeHistory($dryrun = false){
-        $kraken = $this->getMarketEntity();
-        $entities = array();
+    public function updateAllTradeHistory($dryrun = false){
+        $output = array();
         
-        foreach($kraken->getTradingPairs() as $pair){
-            if( $pair->isActive() && $this->api->hasApiCallleft() ){
-                // GET THE ID OF THE LAST TRADE IN DB
-                $lastTrade = $this->getTradeRepository()->getLastTrade($kraken, $pair); 
-                
-                if($lastTrade){
-                    $lastId = $lastTrade->getRemoteId();
-                }else{
-                    $lastId = null;
-                }
-                $pairHistory = $this->readMarketHistory($pair, $lastId);
-                
-                if(!array_key_exists('result', $pairHistory)){
-                    throw new Exception('updateTradeHistory: No results from api. data: ' 
-                            . print_r($pairHistory['error'], true));
-                }
-                $entities = array_merge($entities, $this->rawToTrades($pairHistory['result'][$pair->getRemoteName()], $pair, $pairHistory['result']['last']));
-            }
+        $kraken = $this->getMarketEntity();
+        $activePairs = $kraken->getActiveTradingPairs();
+        foreach($activePairs as $pair){
+            $output[$pair->getName()] = $this->updateTradeHistory($pair, $dryrun);
+        }
+
+        return $output;
+    }
+    
+    /**
+     * Updates the history for a single tradingpair
+     * @param TradingPair $pair
+     * @param boolean $dryrun
+     * @throws Exception
+     * @return integer number of new Trades
+     */
+    public function updateTradeHistory(TradingPair $pair, $dryrun = false){
+        if(!$this->api->hasApiCallsLeft()){
+            throw new Exception('API LIMIT EXCEEDED');
         }
         
+        $lastTrade = $this->getTradeRepository()->getLastTrade($this->getMarketEntity(), $pair);
+
+        if($lastTrade){
+            $lastId = $lastTrade->getRemoteId();
+        }else{
+            $lastId = null;
+        }
+
+        $history = $this->readMarketHistory($pair, $lastId);
+        if(!array_key_exists('result', $history)){
+            throw new Exception('updateTradeHistory: No results from api. data: ' 
+                    . print_r($history['error'], true));
+        }
+        
+        $entities = $this->rawToTrades($history['result'][$pair->getRemoteName()], $pair, $history['result']['last']);
         foreach($entities as $e){
             $this->getManager()->persist($e);
         }
@@ -104,6 +119,7 @@ class KrakenMarketService extends AbstractMarketService{
         return $pairsEntities;
     }
     
+    
     /**
      * @param string $tradingPairName
      * @param boolean $enable
@@ -122,7 +138,7 @@ class KrakenMarketService extends AbstractMarketService{
      * @return array|null
      */
     protected function readMarketHistory(TradingPair $pair, $lastId){
-        if(!$this->api->hasApiCallleft()){
+        if(!$this->api->hasApiCallsLeft()){
             throw new Exception('API CALLS EXECEEDED');
         }
         
