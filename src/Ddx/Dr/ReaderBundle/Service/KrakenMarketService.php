@@ -135,8 +135,7 @@ class KrakenMarketService extends AbstractMarketService{
         $remoteId = null;
         $output = array();
         
-        file_put_contents('rawTrades', print_r($rawTrades, true));
-//        die('FIN');
+//        file_put_contents('rawTrades', print_r($rawTrades, true));
         
         $len = count($rawTrades) - 1;
         $i = 0;
