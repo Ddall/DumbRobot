@@ -104,6 +104,14 @@ class KrakenMarketService extends AbstractMarketService{
         return $pairsEntities;
     }
     
+    /**
+     * @param string $tradingPairName
+     * @param boolean $enable
+     */
+    public function manageTradingPairs(string $tradingPairName, $enable = null){
+        
+    }
+    
         // -- TOOLS -- TOOLS -- TOOLS -- TOOLS -- TOOLS -- TOOLS -- TOOLS -- TOOLS
     
     /**
