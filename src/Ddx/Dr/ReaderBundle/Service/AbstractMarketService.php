@@ -26,12 +26,12 @@ abstract class AbstractMarketService extends ContainerAware{
     }
     
     /**
-     * @param AbstractMarket $api
-     * @throws Exception
+     * @param boolean $dryrun
+     * @throws \Exception
      */
-//    protected function setApi(AbstractMarket $market){
-//        throw new \ Exception('You must overload AbstractMarket::setApi()');
-//    }
+    public function updateTradeHistory($dryrun = false){
+        throw new \ Exception('You must overload AbstractMarket::setApi()');
+    }
     
     /**
      * @return \Doctrine\ORM\EntityRepository
