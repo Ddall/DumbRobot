@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ProtoCommand.php - UTF-8
+ * KrakenUpdateTradingPairsCommand.php - UTF-8
  * @author Allan IRDEL
  */
 
