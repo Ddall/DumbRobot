@@ -95,6 +95,26 @@ class KrakenApiWrapper extends AbstractMarket{
     }
     
     /**
+     * OUTPUTS
+     * <pair_name> = pair name
+     *   asks = ask side array of array entries(<price>, <volume>, <timestamp>)
+     *   bids = bid side array of array entries(<price>, <volume>, <timestamp>)
+     * @param TradingPair $pair 
+     * @param integer $limit (optionnal) limit
+     * @return arrray() 
+     */
+    public function getOrderBook(TradingPair $pair, integer $limit = NULL){
+        $request = array(
+            'pair' => (string)$pair->getRemoteName()
+        );
+        
+        if($limit !== NULL){
+            $request['count'] = (integer)$limit;
+        }
+            
+        return $this->api->QueryPublic('Depth', $request);
+    }
+    /**
      * TOOLS
      */
     
