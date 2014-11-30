@@ -143,7 +143,7 @@ class KrakenMarketService extends AbstractMarketService{
             $this->getManager()->flush();
         }
         
-        $rawOrderBook = $this->readOrderBook($pair);
+        $rawOrderBook = $this->readOrderBook($pair, 1000);
         foreach($rawOrderBook[$pair->getRemoteName()]['asks'] as $rawPos){
             $orderBook->addAsk($this->rawToPosition($rawPos));
         }
@@ -171,7 +171,6 @@ class KrakenMarketService extends AbstractMarketService{
     public function updateAllOrderBook($dryrun = false){
         foreach($this->getMarketEntity()->getActiveTradingPairs() as $pair ){
             $output[$pair->getRemoteName()] = $this->updateOrderBook($pair, $dryrun);
-            
         }
         
         return $output;
@@ -185,7 +184,7 @@ class KrakenMarketService extends AbstractMarketService{
      * @throws Exception
      * @return array
      */
-    protected function readOrderBook(TradingPair $pair, integer $limit = null){
+    protected function readOrderBook(TradingPair $pair, $limit = null){
         $orderBook = $this->api->getOrderBook($pair, $limit);
         if(count($orderBook['error']) !== 0){
             throw new Exception('API ERROR: ' . print_r($orderBook['error'], true));

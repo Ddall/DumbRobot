@@ -103,13 +103,15 @@ class KrakenApiWrapper extends AbstractMarket{
      * @param integer $limit (optionnal) limit
      * @return arrray() 
      */
-    public function getOrderBook(TradingPair $pair, integer $limit = NULL){
+    public function getOrderBook(TradingPair $pair, $limit = NULL){
         $request = array(
             'pair' => (string)$pair->getRemoteName()
         );
         
         if($limit !== NULL){
             $request['count'] = (integer)$limit;
+        }else{
+            $request['count'] = 1500;
         }
             
         return $this->api->QueryPublic('Depth', $request);

@@ -34,13 +34,13 @@ class KrakenUpdateOrderBookCommand extends ContainerAwareCommand {
         $output->write('Updating Krakens orderbook for all active trading pairs ... ');
         $krakenService  = $this->getContainer()->get('ddx.kraken');
         
-        $count = $krakenService->updateAllOrderBook( $input->getOption('dryrun') );
+        $data = $krakenService->updateAllOrderBook( $input->getOption('dryrun') );
         $output->writeln(' DONE.');
         
-//        $output->writeln('Summary of new elements:');
-//        foreach($count as $key => $line){
-//            $output->writeln('- '. $key . ': ' .$line . ' new Trades');
-//        }
+        $output->writeln('Summary of new elements:');
+        foreach($data as $key => $line){
+            $output->writeln('- '. $key . ': ' . $line['bids'] . ' bids, ' . $line['asks'] . ' asks');
+        }
         
     }
 }
