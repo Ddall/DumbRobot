@@ -1,7 +1,7 @@
 <?php
 
 /**
- * KrakenUpdateTradeHistoryCommand.php - UTF-8
+ * KrakenUpdateOrderBookCommand.php - UTF-8
  * @author Allan IRDEL 
  */
 namespace Ddx\Dr\ReaderBundle\Command;
@@ -12,12 +12,12 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class KrakenUpdateTradeHistoryCommand extends ContainerAwareCommand {
+class KrakenUpdateOrderBookCommand extends ContainerAwareCommand {
 
     protected function configure() {
         $this
-                ->setName('kraken:tradehistory:update')
-                ->setDescription('Kraken: Use this to update the trade history of Kraken' .PHP_EOL .'Costs 2 points per active tradingpair')
+                ->setName('kraken:orderbook:update')
+                ->setDescription('Kraken: Use this to update the orderbook of Kraken' .PHP_EOL .'Costs 1 points per active tradingpair')
                 ->addArgument('pair', InputArgument::OPTIONAL, 'Select only one trading pair', null)
                 ->addOption('dryrun', null, InputOption::VALUE_NONE, 'DONT KEEP CHANGES ')
         ;
@@ -31,16 +31,16 @@ class KrakenUpdateTradeHistoryCommand extends ContainerAwareCommand {
             $output->writeln('DRYRUN: DATA WONT BE FLUSHED');
         }
         
-        $output->write('Updating Krakens trade history for all active trading pairs ... ');
+        $output->write('Updating Krakens orderbook for all active trading pairs ... ');
         $krakenService  = $this->getContainer()->get('ddx.kraken');
         
-        $count = $krakenService->updateAllTradeHistory( $input->getOption('dryrun') );
+        $count = $krakenService->updateAllOrderBook( $input->getOption('dryrun') );
         $output->writeln(' DONE.');
         
-        $output->writeln('Summary of new elements:');
-        foreach($count as $key => $line){
-            $output->writeln('- '. $key . ': ' .$line . ' new Trades');
-        }
+//        $output->writeln('Summary of new elements:');
+//        foreach($count as $key => $line){
+//            $output->writeln('- '. $key . ': ' .$line . ' new Trades');
+//        }
         
     }
 }

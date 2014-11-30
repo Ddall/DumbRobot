@@ -12,6 +12,8 @@ use Ddx\Dr\ReaderBundle\Market\KrakenApiWrapper;
 use Ddx\Dr\ReaderBundle\Service\AbstractMarketService;
 use Ddx\Dr\MarketBundle\Entity\TradingPair;
 use Ddx\Dr\MarketBundle\Entity\Trade;
+use Ddx\Dr\MarketBundle\Entity\Position;
+use Ddx\Dr\MarketBundle\Entity\OrderBook;
 use \Exception as Exception;
 
 class KrakenMarketService extends AbstractMarketService{
@@ -119,7 +121,78 @@ class KrakenMarketService extends AbstractMarketService{
         return $pairsEntities;
     }
     
-        // -- TOOLS -- TOOLS -- TOOLS -- TOOLS -- TOOLS -- TOOLS -- TOOLS -- TOOLS
+
+    /**
+     * Use this to update a single trading pair
+     * @param TradingPair $pair
+     * @param boolean $dryrun
+     */
+    public function updateOrderBook(TradingPair $pair, $dryrun = false){
+        if(!$pair->isActive()){
+            throw new Exception('TRADING PAIR IS NOT ACTIVE');
+        }
+        
+        $orderBook = new OrderBook();
+        $orderBook
+                ->setMarket($this->getMarketEntity())
+                ->setTradingPair($pair)
+                ->setRemotetime($this->api->getCurrentTime());
+        $this->getManager()->persist($orderBook);
+        
+        if(!$dryrun){
+            $this->getManager()->flush();
+        }
+        
+        $rawOrderBook = $this->readOrderBook($pair);
+        foreach($rawOrderBook[$pair->getRemoteName()]['asks'] as $rawPos){
+            $orderBook->addAsk($this->rawToPosition($rawPos));
+        }
+        
+        foreach($rawOrderBook[$pair->getRemoteName()]['bids'] as $rawPos){
+            $orderBook->addBid($this->rawToPosition($rawPos));
+        }
+        
+        $this->getManager()->persist($orderBook);
+        if(!$dryrun){
+            $this->getManager()->flush();
+        }
+        
+        return array(
+            'asks' => $orderBook->getAsks()->count(),
+            'bids' => $orderBook->getBids()->count(),
+        );
+    }
+    
+    /**
+     * Use this to update the orderbook for all tradingpairs
+     * costs 1 point per active pair
+     * @param boolean $dryrun
+     */
+    public function updateAllOrderBook($dryrun = false){
+        foreach($this->getMarketEntity()->getActiveTradingPairs() as $pair ){
+            $output[$pair->getRemoteName()] = $this->updateOrderBook($pair, $dryrun);
+            
+        }
+        
+        return $output;
+    }
+    
+    // -- TOOLS -- TOOLS -- TOOLS -- TOOLS -- TOOLS -- TOOLS -- TOOLS -- TOOLS
+    
+    /**
+     * @param TradingPair $pair
+     * @param integer $limit
+     * @throws Exception
+     * @return array
+     */
+    protected function readOrderBook(TradingPair $pair, integer $limit = null){
+        $orderBook = $this->api->getOrderBook($pair, $limit);
+        if(count($orderBook['error']) !== 0){
+            throw new Exception('API ERROR: ' . print_r($orderBook['error'], true));
+        }
+        return $orderBook['result'];
+    }
+    
     
     /**
      * Returns the history of a certain market (defined by the tradingpairs)
@@ -139,6 +212,23 @@ class KrakenMarketService extends AbstractMarketService{
         
         return null;
     }
+    
+    /**
+     * Converts raw position from Depth Api to a Position entity
+     * @param array $data
+     * @return Position
+     */
+    protected function rawToPosition(array $data){
+        $pos = new Position();
+        $pos
+                ->setPrice($data[0])
+                ->setVolume($data[1])
+                ->setUnixTimestamp($data[2])
+                ;
+        return $pos;
+    }
+    
+    
     /**
      * Converts a TWO DIMENSIONNAL ARRAY of API results to an array of Trade entities
      * @param array $rawTrades
@@ -149,8 +239,6 @@ class KrakenMarketService extends AbstractMarketService{
     private function rawToTrades($rawTrades, TradingPair $tradingPair, $lastId){
         $remoteId = null;
         $output = array();
-        
-//        file_put_contents('rawTrades', print_r($rawTrades, true));
         
         $len = count($rawTrades) - 1;
         $i = 0;
