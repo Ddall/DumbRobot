@@ -32,12 +32,10 @@ class ProtoCommand extends ContainerAwareCommand {
      */
     public function execute(InputInterface $input, OutputInterface $output) {
         $kraken = new KrakenApiWrapper($this->getContainer());
-//        $data = $kraken->getTradeHistory($);
-//        
+        
+        
         $krakenService  = $this->getContainer()->get('ddx.kraken');
-        $data = $krakenService->updateTradeHistory();
-//        
-//        $data = $krakenService->readMarket();
+        $data = $krakenService->protoFn();
         
         $output->writeln(print_r($data, true));
         

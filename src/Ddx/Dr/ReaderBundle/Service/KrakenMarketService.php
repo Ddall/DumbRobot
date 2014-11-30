@@ -176,6 +176,11 @@ class KrakenMarketService extends AbstractMarketService{
         return $output;
     }
     
+    
+    public function protoFn(){
+        
+    }
+    
     // -- TOOLS -- TOOLS -- TOOLS -- TOOLS -- TOOLS -- TOOLS -- TOOLS -- TOOLS
     
     /**
