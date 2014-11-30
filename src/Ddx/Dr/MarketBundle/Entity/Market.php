@@ -32,14 +32,14 @@ class Market
     /**
      * @var Trade
      * 
-     * @ORM\OneToMany(targetEntity="Ddx\Dr\MarketBundle\Entity\Trade", mappedBy="market", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="Ddx\Dr\MarketBundle\Entity\Trade", mappedBy="market", cascade={"persist"}, orphanRemoval=true)
      */
     private $trades;
     
     /**
      *
      * @var TradingPair
-     * @ORM\OneToMany(targetEntity="Ddx\Dr\MarketBundle\Entity\TradingPair", mappedBy="market", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="Ddx\Dr\MarketBundle\Entity\TradingPair", mappedBy="market", cascade={"persist"}, orphanRemoval=true)
      */
     private $tradingPairs;
     

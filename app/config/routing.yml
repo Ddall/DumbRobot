@@ -1,12 +1,8 @@
-ddx_dr_market:
-    resource: "@DdxDrMarketBundle/Resources/config/routing.yml"
+ddx_dr_web:
+    resource: "@DdxDrWebBundle/Resources/config/routing.yml"
     prefix:   /
 
-dr_ddx_market:
-    resource: "@DrDdxMarketBundle/Resources/config/routing.yml"
-    prefix:   /
-
-ddx_dr_reader:
-    resource: "@DdxDrReaderBundle/Resources/config/routing.yml"
+ddx_dr_web:
+    resource: "@DdxDrWebBundle/Resources/config/routing.yml"
     prefix:   /
 
