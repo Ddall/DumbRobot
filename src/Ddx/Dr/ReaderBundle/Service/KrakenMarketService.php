@@ -126,6 +126,7 @@ class KrakenMarketService extends AbstractMarketService{
      * Use this to update a single trading pair
      * @param TradingPair $pair
      * @param boolean $dryrun
+     * @return array
      */
     public function updateOrderBook(TradingPair $pair, $dryrun = false){
         if(!$pair->isActive()){
@@ -167,6 +168,7 @@ class KrakenMarketService extends AbstractMarketService{
      * Use this to update the orderbook for all tradingpairs
      * costs 1 point per active pair
      * @param boolean $dryrun
+     * @return array
      */
     public function updateAllOrderBook($dryrun = false){
         foreach($this->getMarketEntity()->getActiveTradingPairs() as $pair ){
