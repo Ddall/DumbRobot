@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class IndexController extends Controller{
 
     /**
+     * route /kraken/history
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function krakenHistoryAction(){

@@ -30,9 +30,10 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     globals:
+        locale:     "%locale%"
         format_date: "d/m/Y"
-        format_datetime: "d/m/Y H:i"
-        format_time: "H:i" 
+        format_datetime: "d/m/Y H:i:s"
+        format_time: "H:i:s" 
 
 # Assetic Configuration
 assetic:

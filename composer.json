@@ -19,8 +19,7 @@
         "sensio/distribution-bundle": "~3.0",
         "sensio/framework-extra-bundle": "~3.0",
         "incenteev/composer-parameter-handler": "~2.0",
-        "payward/kraken-api-client": "dev-master",
-        "twbs/bootstrap": "3.3.*@dev"
+        "payward/kraken-api-client": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
