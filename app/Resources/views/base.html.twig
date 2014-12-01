@@ -2,10 +2,11 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}DdxDR{% endblock %}</title>
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" type="text/css" />
         {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
+{#        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+#}    </head>
     <body>
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
