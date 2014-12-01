@@ -82,7 +82,7 @@ class Trade
     /**
      * @var Market
      * 
-     * @ORM\ManyToOne(targetEntity="Ddx\Dr\MarketBundle\Entity\Market")
+     * @ORM\ManyToOne(targetEntity="Ddx\Dr\MarketBundle\Entity\Market", inversedBy="trades")
      * @ORM\JoinColumn(name="market_id", referencedColumnName="id", nullable=false)
      */
     private $market;

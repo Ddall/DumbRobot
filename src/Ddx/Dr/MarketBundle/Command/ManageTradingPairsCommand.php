@@ -16,7 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ManageTradingPairsCommand extends ContainerAwareCommand{
     public function configure() {
         $this
-                ->setName('kraken:tradingpairs:set')
+                ->setName('tradingpairs:manage')
                 ->setDescription('Manages TradingPairs')
                 ->addArgument('market', InputArgument::OPTIONAL, 'Markets name', null)
                 ->addArgument('pair', InputArgument::OPTIONAL, 'TradingPairs name', null)
