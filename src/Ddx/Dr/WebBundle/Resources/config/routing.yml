@@ -1,3 +1,4 @@
 ddxdr_kraken_history:
     path:     /kraken/history
+    methods: [ get ]
     defaults: { _controller: DdxDrWebBundle:Index:krakenHistory }
