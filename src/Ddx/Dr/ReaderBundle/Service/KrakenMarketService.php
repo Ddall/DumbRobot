@@ -201,7 +201,7 @@ class KrakenMarketService extends AbstractMarketService{
     
     /**
      * Returns the history of a certain market (defined by the tradingpairs)
-     * @todo handle errors
+     * @_todo handle errors
      * @param TradingPair $pair
      * @param string $lastId id of the last trade
      * @return array|null

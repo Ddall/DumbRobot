@@ -160,7 +160,7 @@ class KrakenApiWrapper extends AbstractMarket{
     
     /**
      * Checks if API has at least two hits left
-     * @todo IMPLEMENT THIS
+     * @_todo IMPLEMENT THIS
      * @return boolean
      */
     public function hasApiCallsLeft(){
