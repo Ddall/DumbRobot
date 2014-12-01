@@ -1,8 +1,11 @@
 services:
     ddx.tradingpair:
         class: Ddx\Dr\MarketBundle\Service\TradingPairService
-        arguments: [@service_container]
-        
+        arguments:
+            entityManager: "@doctrine.orm.entity_manager"
+
     ddx.trade:
         class: Ddx\Dr\MarketBundle\Service\TradeService
-        arguments: [@service_container]
+        arguments:
+            entityManager: "@doctrine.orm.entity_manager"
+            

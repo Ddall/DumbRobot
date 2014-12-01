@@ -1,8 +1,9 @@
 services:
-    ddx.base:
-        class: Ddx\Dr\ReaderBundle\Service\DdxDrBaseService
-        arguments: [@service_container]
-        
     ddx.kraken:
         class: Ddx\Dr\ReaderBundle\Service\KrakenMarketService
-        arguments: [@service_container]
+        arguments:
+            entityManager: "@doctrine.orm.entity_manager"
+            tradeService: "@ddx.trade"
+            tradingPairService: "@ddx.tradingpair"
+            parameters : ['%kraken%']
+            

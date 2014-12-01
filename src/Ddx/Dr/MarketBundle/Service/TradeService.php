@@ -5,8 +5,8 @@ namespace Ddx\Dr\MarketBundle\Service;
  */
 
 use Ddx\Dr\ReaderBundle\Service\AbstractDdxDrService;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Ddx\Dr\MarketBundle\Entity\Market;
 use Ddx\Dr\MarketBundle\Entity\TradingPair;
 
@@ -15,12 +15,14 @@ use \Exception as Exception;
 class TradeService extends AbstractDdxDrService {
     
     /**
-     * @param ContainerInterface $container
+     * @param EntityManagerInterface $entityManager
+     * @return \Ddx\Dr\MarketBundle\Service\TradeService
      */
-    public function __construct(ContainerInterface $container) {
-        parent::setContainer($container);
+    public function __construct(EntityManagerInterface $entityManager) {
+        $this->setEntityManager($entityManager);
+        return $this;
     }
-    
+
     /**
      * Returns trades for a Market and a TradingPair
      * @param Market $market

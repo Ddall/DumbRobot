@@ -29,12 +29,9 @@ class ProtoCommand extends ContainerAwareCommand {
      * @param OutputInterface $output
      */
     public function execute(InputInterface $input, OutputInterface $output) {
-        $kraken = new KrakenApiWrapper($this->getContainer());
         
-        
-        $krakenService  = $this->getContainer()->get('ddx.kraken');
-        $data = $krakenService->protoFn();
-        
+        $krakenService  = $this->getContainer()->get('ddx.dummy');
+        die(get_class($krakenService->getEm()->getRepository('DdxDrMarketBundle:Market')->find(1)));
         $output->writeln(print_r($data, true));
         
     }

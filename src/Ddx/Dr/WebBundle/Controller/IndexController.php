@@ -19,11 +19,5 @@ class IndexController extends Controller{
             'data' => $trades,
         ));
     }
-    
-    /**
-     * @return \Ddx\Dr\ReaderBundle\Service\DdxDrBaseService
-     */
-    protected function getBaseService(){
-        return $this->container->get('ddx.base');
-    }
+
 }

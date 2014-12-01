@@ -5,7 +5,9 @@ namespace Ddx\Dr\ReaderBundle\Service;
  * @author Allan
  */
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use Ddx\Dr\MarketBundle\Service\TradeService;
+use Ddx\Dr\MarketBundle\Service\TradingPairService;
 
 use Ddx\Dr\ReaderBundle\Market\KrakenApiWrapper;
 use Ddx\Dr\ReaderBundle\Service\AbstractMarketService;
@@ -294,14 +296,27 @@ class KrakenMarketService extends AbstractMarketService{
         return $trade;
     }
     
+
     /**
-     * __ctor
-     * @param ContainerInterface $container
+     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     * @param \Ddx\Dr\MarketBundle\Service\TradeService $tradeService
+     * @param \Ddx\Dr\MarketBundle\Service\TradingPairService $tradingPairService
+     * @param \Ddx\Dr\ReaderBundle\Service\KrakenMarketService $krakenMarketService
+     * @param array $parameters
      */
-    public function __construct(ContainerInterface $container) {
-        parent::__construct($container);
+    public function __construct(
+            EntityManagerInterface $entityManager,
+            TradeService $tradeService,
+            TradingPairService $tradingPairService,
+            $parameters
+        ) {
+        $this
+                ->setEntityManager($entityManager)
+                ->setTradeService($tradeService)
+                ->setTradingPairService($tradingPairService)
+                ;
+        $this->setApi( new KrakenApiWrapper($parameters));
         
-        $this->setApi( new KrakenApiWrapper($container) );
     }
       
     /**
@@ -318,7 +333,7 @@ class KrakenMarketService extends AbstractMarketService{
      */
     protected function getMarketEntity(){
         if($this->_krakenEntity === null){
-            $this->_krakenEntity =  $this->container->get('doctrine')->getManager()->getRepository('DdxDrMarketBundle:Market')->findOneByName('Kraken');
+            $this->_krakenEntity =  $this->getManager()->getRepository('DdxDrMarketBundle:Market')->findOneByName('Kraken');
             if(!$this->_krakenEntity){
                 throw new Exception('KrakenMarketService: Market entity was not found');
             }

@@ -6,9 +6,8 @@
 namespace Ddx\Dr\ReaderBundle\Market;
 
 use Payward\KrakenAPI;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Ddx\Dr\MarketBundle\Entity\TradingPair;
-use \Exception;
+use \Exception as Exception;
 
 class KrakenApiWrapper extends AbstractMarket{
 
@@ -18,18 +17,13 @@ class KrakenApiWrapper extends AbstractMarket{
      */
     protected $api;
     
-    /**
-     * @var ContainerInterface 
-     */
-    protected $container;
 
     /**
-     * __ctor
-     * @param ContainerInterface $container
+     * @param array $parameters
+     * @return KrakenApiWrapper
      */
-    public function __construct(ContainerInterface $container) {
-        parent::__construct($container);
-        $params = $this->getParameters();
+    public function __construct($parameters) {
+        $params = $this->checkParameters($parameters);
         
         $this->api = new KrakenAPI(
                 $params['api_key'],
@@ -38,11 +32,12 @@ class KrakenApiWrapper extends AbstractMarket{
                 $params['api_version'],
                 $params['ssl_verify']
             );
+        
+        return $this;
     }
 
     /**
      * Returns the servers current time in DateTime format
-     * @throws \Exception
      * @return \DateTime
      */
     public function getCurrentTime() {
@@ -58,7 +53,6 @@ class KrakenApiWrapper extends AbstractMarket{
      * array[_PAIR_NAME_](
      *      [_INFOS_]
      * )
-     * @throws Exception
      * @return array|null
      */
     public function getTradingPairs() {
@@ -194,12 +188,11 @@ class KrakenApiWrapper extends AbstractMarket{
     // PARAMETERS
     /**
      * Reads the global parameters.yml
+     * @param array
      * @return array
      * @throws Exception
      */
-    private function getParameters(){
-        $params = $this->readParameter('kraken');
-        
+    private function checkParameters($params){
         if(!$params && is_array($params) && array_key_exists('enable', $params) && $params['enable'] === true ){
             throw new Exception('KRAKEN IS NOT ENABLED');
         }
