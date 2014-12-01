@@ -111,11 +111,28 @@ class KrakenApiWrapper extends AbstractMarket{
         if($limit !== NULL){
             $request['count'] = (integer)$limit;
         }else{
-            $request['count'] = 1500;
+            $request['count'] = 1000;
         }
             
         return $this->api->QueryPublic('Depth', $request);
     }
+    
+    /**
+     * @param TradingPair $pair
+     * @param integer $interval
+     * @param integer $since
+     * @return array
+     */
+    public function getOHLC(TradingPair $pair, $interval = 1,   $since = null){
+        $request = array(
+            'pair' => (string)$pair->getRemoteName(),
+            'interval' => $interval,
+            'since' => $since,
+        );
+        
+        return $this->api->QueryPublic('OHLC', $request);
+    }
+    
     /**
      * TOOLS
      */
