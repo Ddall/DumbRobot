@@ -12,8 +12,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-use Ddx\Dr\ReaderBundle\Market\KrakenApiWrapper;
-
 class ProtoCommand extends ContainerAwareCommand {
 
     protected function configure() {
@@ -31,8 +29,7 @@ class ProtoCommand extends ContainerAwareCommand {
     public function execute(InputInterface $input, OutputInterface $output) {
         
         $krakenService  = $this->getContainer()->get('ddx.dummy');
-        die(get_class($krakenService->getEm()->getRepository('DdxDrMarketBundle:Market')->find(1)));
-        $output->writeln(print_r($data, true));
+        $krakenService->getEm()->getRepository('DdxDrMarketBundle:Market')->find(1);
         
     }
 }

@@ -6,4 +6,4 @@ services:
             tradeService: "@ddx.trade"
             tradingPairService: "@ddx.tradingpair"
             parameters : ['%kraken%']
-            
+
