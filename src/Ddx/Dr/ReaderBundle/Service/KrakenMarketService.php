@@ -5,7 +5,6 @@ namespace Ddx\Dr\ReaderBundle\Service;
  * @author Allan
  */
 
-use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use Ddx\Dr\ReaderBundle\Market\KrakenApiWrapper;
@@ -102,7 +101,7 @@ class KrakenMarketService extends AbstractMarketService{
                 'remoteName' => $name,
             ));
             
-            if($localPair == null){ 
+            if($localPair === null){ 
                 $pairsEntities[$name] = new TradingPair($kraken, $name, $name);
                 $this->getManager()->persist($pairsEntities[$name]);
             }
@@ -318,7 +317,7 @@ class KrakenMarketService extends AbstractMarketService{
      * @return \Ddx\Dr\MarketBundle\Entity\Market Instance of Kraken Entity
      */
     protected function getMarketEntity(){
-        if($this->_krakenEntity == null){
+        if($this->_krakenEntity === null){
             $this->_krakenEntity =  $this->container->get('doctrine')->getManager()->getRepository('DdxDrMarketBundle:Market')->findOneByName('Kraken');
             if(!$this->_krakenEntity){
                 throw new Exception('KrakenMarketService: Market entity was not found');

@@ -41,8 +41,21 @@ class Position
      * @ORM\Column(name="timestamp", type="datetime")
      */
     private $timestamp;
-    // -- PERSO -- PERSO -- PERSO -- PERSO -- PERSO -- PERSO -- PERSO -- PERSO
     
+    // -- PERSO -- PERSO -- PERSO -- PERSO -- PERSO -- PERSO -- PERSO -- PERSO
+    public function __construct() {
+        $this->timestamp = new \DateTime();
+        return $this;
+    }
+
+    /**
+     * @param string $unixtimestamp
+     * @return \Ddx\Dr\MarketBundle\Entity\Position
+     */
+    public function setUnixTimestamp($unixtimestamp){
+        $this->timestamp->setTimestamp($unixtimestamp);
+        return $this;
+    }
     
     // -- AUTO -- AUTO -- AUTO -- AUTO -- AUTO -- AUTO -- AUTO -- AUTO -- AUTO
     /**

@@ -1,5 +1,5 @@
 {
-    "name": "ddall/ddxDumbRobot",
+    "name": "ddall/ddx-dumb-robot",
     "license": "MIT",
     "type": "project",
     "description": "A completly dumb Bitcoin trading bot",

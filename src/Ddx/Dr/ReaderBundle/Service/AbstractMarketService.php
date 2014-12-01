@@ -6,7 +6,6 @@ namespace Ddx\Dr\ReaderBundle\Service;
  * @author Allan
  */
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Ddx\Dr\ReaderBundle\Service\AbstractDdxDrService;
 
 use Ddx\Dr\ReaderBundle\Market\AbstractMarket;

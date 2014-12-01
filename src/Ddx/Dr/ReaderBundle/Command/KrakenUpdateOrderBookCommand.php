@@ -27,7 +27,7 @@ class KrakenUpdateOrderBookCommand extends ContainerAwareCommand {
      * @param OutputInterface $output
      */
     public function execute(InputInterface $input, OutputInterface $output) {
-        if($input->getOption('dryrun') && $input->getOption('dryrun') == true){
+        if($input->getOption('dryrun') && $input->getOption('dryrun') === true){
             $output->writeln('DRYRUN: DATA WONT BE FLUSHED');
         }
         

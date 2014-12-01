@@ -33,6 +33,10 @@ class TradeService extends AbstractDdxDrService {
             'tradingPair' => $pair->getId(),
         ));
         
+        if(!$trades){
+            throw new Exception('NO TRADES FOUND');
+        }
+        
         return $trades;
     }
     

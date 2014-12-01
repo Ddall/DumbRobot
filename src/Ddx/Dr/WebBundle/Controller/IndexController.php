@@ -14,18 +14,16 @@ class IndexController extends Controller{
      */
     public function krakenHistoryAction(){
         $trades = $this->getDoctrine()->getManager()->getRepository('DdxDrMarketBundle:Market')->findOneBy(array('name' => 'Kraken'))->getTrades();
-        $this->debug($trades);
         
         return $this->render('DdxDrWebBundle:History:index.html.twig', array(
-            
+            'data' => $trades,
         ));
     }
     
-    
     /**
-     * @param mixed $data
+     * @return \Ddx\Dr\ReaderBundle\Service\DdxDrBaseService
      */
-    protected function debug($data){
-        die('<pre>' . print_r($data, true) . '</pre>');
+    protected function getBaseService(){
+        return $this->container->get('ddx.base');
     }
 }

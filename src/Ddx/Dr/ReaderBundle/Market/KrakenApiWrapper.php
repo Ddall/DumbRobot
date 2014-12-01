@@ -200,7 +200,7 @@ class KrakenApiWrapper extends AbstractMarket{
     private function getParameters(){
         $params = $this->readParameter('kraken');
         
-        if(!$params && is_array($params) && array_key_exists('enable', $params) && $params['enable'] == true ){
+        if(!$params && is_array($params) && array_key_exists('enable', $params) && $params['enable'] === true ){
             throw new Exception('KRAKEN IS NOT ENABLED');
         }
         

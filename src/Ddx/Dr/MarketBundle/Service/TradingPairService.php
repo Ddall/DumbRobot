@@ -23,7 +23,7 @@ class TradingPairService extends AbstractDdxDrService {
      * @param string $tradingPairName
      * @param boolean $enable
      */
-    public function manageTradingPair(string $marketName, string $tradingPairName, $enable = null){
+    public function manageTradingPair($marketName, $tradingPairName, $enable = null){
         $market = $this->getMarketRepository()->findOneByName($marketName);
         if(!$market){
             throw new Exception('UNKNOWN MARKET');
@@ -45,7 +45,7 @@ class TradingPairService extends AbstractDdxDrService {
         }
         
         if($enable !== NULL){
-            $pair->setIsActive($enable);
+            $pair->setActive($enable);
             $this->getManager()->persist($pair);
             $this->getManager()->flush();
         }

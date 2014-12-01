@@ -8,7 +8,6 @@
 namespace Ddx\Dr\ReaderBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -27,7 +26,7 @@ class KrakenUpdateTradingPairsCommand extends ContainerAwareCommand{
      * @param OutputInterface $output
      */
     public function execute(InputInterface $input, OutputInterface $output) {
-        if($input->getOption('dryrun') && $input->getOption('dryrun') == true){
+        if($input->getOption('dryrun') && $input->getOption('dryrun') === true){
             $output->writeln('DRYRUN: DATA WONT BE FLUSHED');
         }
         

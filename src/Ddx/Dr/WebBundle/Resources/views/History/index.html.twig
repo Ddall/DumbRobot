@@ -1,3 +1,10 @@
 {# DdxDrWebBundle:History:index.html.twig #}
-Hello
-{{ dump() }}
+{% extends "::base.html.twig" %}
+{% block body %}
+    Trades:
+    <pre>
+    {% for trade in data %}
+        - {{ trade.id }} - {{ trade.volume }}@{{ trade.price }}{{trade.assetFrom }} -  {{ trade.timeRemote|date( format_date ) }} <br>
+    {% endfor %}
+    </pre>
+{% endblock %}

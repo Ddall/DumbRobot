@@ -43,6 +43,20 @@ class TradingPair
     private $market;
     
     /**
+     * @var Asset
+     * @ORM\ManyToOne(targetEntity="Ddx\Dr\MarketBundle\Entity\Asset")
+     * @ORM\JoinColumn(name="assetFrom_id", referencedColumnName="id")
+     */
+    private $assetFrom;
+    
+    /**
+     * @var Asset
+     * @ORM\ManyToOne(targetEntity="Ddx\Dr\MarketBundle\Entity\Asset")
+     * @ORM\JoinColumn(name="assetTo_id", referencedColumnName="id")
+     */
+    private $assetTo;
+    
+    /**
      * @var boolean
      * @ORM\Column(name="isActive", type="boolean", nullable=false)
      */
@@ -183,7 +197,7 @@ class TradingPair
      * @param boolean $isActive
      * @return TradingPair
      */
-    public function setIsActive($isActive)
+    public function setActive($isActive)
     {
         $this->isActive = $isActive;
 
@@ -191,12 +205,48 @@ class TradingPair
     }
 
     /**
-     * Get isActive
+     * Set assetFrom
      *
-     * @return boolean 
+     * @param \Ddx\Dr\MarketBundle\Entity\Asset $assetFrom
+     * @return TradingPair
      */
-    public function getIsActive()
+    public function setAssetFrom(\Ddx\Dr\MarketBundle\Entity\Asset $assetFrom = null)
     {
-        return $this->isActive;
+        $this->assetFrom = $assetFrom;
+
+        return $this;
+    }
+
+    /**
+     * Get assetFrom
+     *
+     * @return \Ddx\Dr\MarketBundle\Entity\Asset 
+     */
+    public function getAssetFrom()
+    {
+        return $this->assetFrom;
+    }
+
+    /**
+     * Set assetTo
+     *
+     * @param \Ddx\Dr\MarketBundle\Entity\Asset $assetTo
+     * @return TradingPair
+     */
+    public function setAssetTo(\Ddx\Dr\MarketBundle\Entity\Asset $assetTo = null)
+    {
+        $this->assetTo = $assetTo;
+
+        return $this;
+    }
+
+    /**
+     * Get assetTo
+     *
+     * @return \Ddx\Dr\MarketBundle\Entity\Asset 
+     */
+    public function getAssetTo()
+    {
+        return $this->assetTo;
     }
 }

@@ -8,12 +8,10 @@
 namespace Ddx\Dr\ReaderBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-use Payward\KrakenAPI;
 use Ddx\Dr\ReaderBundle\Market\KrakenApiWrapper;
 
 class ProtoCommand extends ContainerAwareCommand {

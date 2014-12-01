@@ -104,6 +104,21 @@ class Trade
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getAssetFrom(){
+        return $this->getTradingPair()->getAssetFrom();
+    }
+    
+    /**
+     * 
+     * @return string
+     */
+    public function getAssetTo(){
+        return $this->getTradingPair()->getAssetTo();
+    }
+    
     // AUTO METHODS
 
   

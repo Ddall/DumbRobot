@@ -53,7 +53,7 @@ class OrderBook
     
     /**
      * @var Position
-     * @ORM\ManyToMany(targetEntity="Ddx\Dr\MarketBundle\Entity\Position")
+     * @ORM\ManyToMany(targetEntity="Ddx\Dr\MarketBundle\Entity\Position", cascade={"persist"}, orphanRemoval=true)
      * @ORM\JoinTable(name="orderbook_asks",
      *      joinColumns={@ORM\JoinColumn(name="orderbook_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="position_id", referencedColumnName="id")}
@@ -63,7 +63,7 @@ class OrderBook
     
     /**
      * @var Position
-     * @ORM\ManyToMany(targetEntity="Ddx\Dr\MarketBundle\Entity\Position")
+     * @ORM\ManyToMany(targetEntity="Ddx\Dr\MarketBundle\Entity\Position", cascade={"persist"}, orphanRemoval=true)
      * @ORM\JoinTable(name="orderbook_bids",
      *      joinColumns={@ORM\JoinColumn(name="orderbook_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="position_id", referencedColumnName="id")}
@@ -73,7 +73,15 @@ class OrderBook
 
     // -- PERSO -- PERSO -- PERSO -- PERSO -- PERSO -- PERSO -- PERSO
     
-    
+    /**
+     * @return \Ddx\Dr\MarketBundle\Entity\OrderBook
+     */
+    public function __construct(){
+        $this->timelocal = new \DateTime('now');
+        $this->asks = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->bids = new \Doctrine\Common\Collections\ArrayCollection();
+        return $this;
+    }
     
     // -- AUTO -- AUTO -- AUTO -- AUTO -- AUTO -- AUTO -- AUTO -- AUTO
 
@@ -131,5 +139,117 @@ class OrderBook
     public function getRemotetime()
     {
         return $this->remotetime;
+    }
+
+    /**
+     * Set tradingPair
+     *
+     * @param \Ddx\Dr\MarketBundle\Entity\TradingPair $tradingPair
+     * @return OrderBook
+     */
+    public function setTradingPair(\Ddx\Dr\MarketBundle\Entity\TradingPair $tradingPair)
+    {
+        $this->tradingPair = $tradingPair;
+
+        return $this;
+    }
+
+    /**
+     * Get tradingPair
+     *
+     * @return \Ddx\Dr\MarketBundle\Entity\TradingPair 
+     */
+    public function getTradingPair()
+    {
+        return $this->tradingPair;
+    }
+
+    /**
+     * Set market
+     *
+     * @param \Ddx\Dr\MarketBundle\Entity\Market $market
+     * @return OrderBook
+     */
+    public function setMarket(\Ddx\Dr\MarketBundle\Entity\Market $market)
+    {
+        $this->market = $market;
+
+        return $this;
+    }
+
+    /**
+     * Get market
+     *
+     * @return \Ddx\Dr\MarketBundle\Entity\Market 
+     */
+    public function getMarket()
+    {
+        return $this->market;
+    }
+
+    /**
+     * Add asks
+     *
+     * @param \Ddx\Dr\MarketBundle\Entity\Position $asks
+     * @return OrderBook
+     */
+    public function addAsk(\Ddx\Dr\MarketBundle\Entity\Position $asks)
+    {
+        $this->asks[] = $asks;
+
+        return $this;
+    }
+
+    /**
+     * Remove asks
+     *
+     * @param \Ddx\Dr\MarketBundle\Entity\Position $asks
+     */
+    public function removeAsk(\Ddx\Dr\MarketBundle\Entity\Position $asks)
+    {
+        $this->asks->removeElement($asks);
+    }
+
+    /**
+     * Get asks
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAsks()
+    {
+        return $this->asks;
+    }
+
+    /**
+     * Add bids
+     *
+     * @param \Ddx\Dr\MarketBundle\Entity\Position $bids
+     * @return OrderBook
+     */
+    public function addBid(\Ddx\Dr\MarketBundle\Entity\Position $bids)
+    {
+        $this->bids[] = $bids;
+
+        return $this;
+    }
+
+    /**
+     * Remove bids
+     *
+     * @param \Ddx\Dr\MarketBundle\Entity\Position $bids
+     */
+    public function removeBid(\Ddx\Dr\MarketBundle\Entity\Position $bids)
+    {
+        $this->bids->removeElement($bids);
+    }
+
+    /**
+     * Get bids
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getBids()
+    {
+        return $this->bids;
     }
 }
