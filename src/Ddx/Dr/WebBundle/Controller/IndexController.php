@@ -17,13 +17,12 @@ class IndexController extends Controller{
         $kraken = $this->getHelper()->getMarketRepository()->findOneBy(array('name' => 'Kraken'));
         $tradingRepo = $this->getHelper()->getTradeRepository();
         
-        
         $allTrades = $kraken->getTrades();
-        $avg5 = $tradingRepo->get5MinAverage($kraken, $kraken->getActiveTradingPairs()->first(), 300);
-                
+        $avg5 = $tradingRepo->getWeightedData($kraken, $kraken->getActiveTradingPairs()->first(), 300);
+
         return $this->render('DdxDrWebBundle:History:index.html.twig', array(
             'allTrades' => $allTrades,
-            'avg5Min' => $avg5
+            'vwapData' => $avg5
         ));
     }
 
