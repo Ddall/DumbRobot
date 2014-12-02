@@ -37,15 +37,17 @@ class TradeRepository extends EntityRepository
     /**
      * @param Market $market
      * @param TradingPair $pair
+     * @param integer $interval
      * @return array
      */
-    public function get5MinAverage(Market $market, TradingPair $pair){
+    public function get5MinAverage(Market $market, TradingPair $pair, $interval = 300){
         return $this->createQueryBuilder('t')
                 ->select('t')
                 ->andWhere('t.market = :market_id')
                 ->andWhere('t.tradingPair = :tp_id')
-                ->groupBy('ROUND(UNIX_TIMESTAMP(timestamp) / 300)')
+                ->groupBy('ROUND(UNIX_TIMESTAMP(timestamp) / :interval)')
                 ->orderBy('t.id', 'DESC')
+                ->setParameter('interval', $interval)
                 ->setParameter('market_id', $market->getId() )
                 ->setParameter('tp_id', $pair->getId())
                 ->getQuery()->getResult()

@@ -46,10 +46,10 @@ class Market
     // MANUAL METHODS
     
     /**
-     * @return array Active trading pairs
+     * @return \Doctrine\Common\Collections\ArrayCollection
      */
     public function getActiveTradingPairs(){
-        $pairs = array();
+        $pairs = new \Doctrine\Common\Collections\ArrayCollection();
         
         foreach($this->getTradingPairs() as $pair){
             if($pair->isActive()){

@@ -13,21 +13,21 @@ abstract class AbstractDdxDrService extends AbstractDdxHelper{
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getMarketRepository(){
+    public function getMarketRepository(){
         return $this->getManager()->getRepository('DdxDrMarketBundle:Market');
     }
     
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getTradeRepository(){
+    public function getTradeRepository(){
         return $this->getManager()->getRepository('DdxDrMarketBundle:Trade');
     }
     
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getTradingPairRepository(){
+    public function getTradingPairRepository(){
         return $this->getManager()->getRepository('DdxDrMarketBundle:TradingPair');
     }
     

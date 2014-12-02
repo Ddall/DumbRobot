@@ -27,7 +27,10 @@ class ProtoCommand extends ContainerAwareCommand {
      * @param OutputInterface $output
      */
     public function execute(InputInterface $input, OutputInterface $output) {
-        $base = $this->getContainer()->get('ddx.base')->getManager();
-        
+        /**
+         * @var \Ddx\Dr\ReaderBundle\Service\BaseHelper
+         */
+        $base = $this->getContainer()->get('ddx.helper');
+        $base->getManager();
     }
 }

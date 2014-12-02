@@ -14,11 +14,23 @@ class IndexController extends Controller{
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function krakenHistoryAction(){
-        $trades = $this->getDoctrine()->getManager()->getRepository('DdxDrMarketBundle:Market')->findOneBy(array('name' => 'Kraken'))->getTrades();
+        $kraken = $this->getHelper()->getMarketRepository()->findOneBy(array('name' => 'Kraken'));
+        $tradingRepo = $this->getHelper()->getTradeRepository();
         
+        
+        $allTrades = $kraken->getTrades();
+        $avg5 = $tradingRepo->get5MinAverage($kraken, $kraken->getActiveTradingPairs()->first(), 300);
+                
         return $this->render('DdxDrWebBundle:History:index.html.twig', array(
-            'data' => $trades,
+            'allTrades' => $allTrades,
+            'avg5Min' => $avg5
         ));
     }
 
+    /**
+     * @return \Ddx\Dr\ReaderBundle\Service\BaseHelper
+     */
+    protected function getHelper(){
+        return $this->get('ddx.helper');
+    }
 }

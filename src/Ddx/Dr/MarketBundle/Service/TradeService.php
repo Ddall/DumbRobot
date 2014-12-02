@@ -42,4 +42,15 @@ class TradeService extends AbstractDdxDrService {
         return $trades;
     }
     
+    /**
+     * @param Market $market
+     * @param TradingPair $pair
+     * @param integer $interval
+     * @return array
+     */
+    public function getAvgTrades(Market $market, TradingPair $pair, $interval = 300){
+        $trades = $this->getTradeRepository()->get5MinAverage($market, $pair, $interval);
+        return $trades;
+    }
+    
 }
