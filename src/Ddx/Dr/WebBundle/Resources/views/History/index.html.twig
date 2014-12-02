@@ -17,8 +17,8 @@
             {% for trade in data %}
                 <tr>
                     <td>{{ trade.timeRemote|date( format_datetime ) }}</td>
-                    <td>{{ trade.volume }}{{ trade.assetFrom}}</td>
-                    <td>{{ trade.price }}{{trade.assetTo }} </td>
+                    <td>{{ trade.volume }} {{ trade.assetFrom }}</td>
+                    <td>{{ trade.price }} {{trade.assetTo }} </td>
                     <td>{{ trade.direction }} {{ trade.orderType }}</td>
                 </tr>
             {% endfor %}

@@ -7,3 +7,10 @@ services:
             tradingPairService: "@ddx.tradingpair"
             parameters : ['%kraken%']
 
+    ddx.helper:
+        class: Ddx\Dr\ReaderBundle\Service\BaseHelper
+        arguments:
+            entityManager: "@doctrine.orm.entity_manager"
+            tradeService: "@ddx.trade"
+            tradingPairService: "@ddx.tradingpair"
+            krakenMarketService: "@ddx.kraken"

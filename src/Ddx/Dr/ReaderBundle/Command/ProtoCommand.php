@@ -27,9 +27,7 @@ class ProtoCommand extends ContainerAwareCommand {
      * @param OutputInterface $output
      */
     public function execute(InputInterface $input, OutputInterface $output) {
-        
-        $krakenService  = $this->getContainer()->get('ddx.dummy');
-        $krakenService->getEm()->getRepository('DdxDrMarketBundle:Market')->find(1);
+        $base = $this->getContainer()->get('ddx.base')->getManager();
         
     }
 }

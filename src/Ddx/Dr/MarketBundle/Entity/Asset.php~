@@ -36,6 +36,13 @@ class Asset
     private $abbr;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="symbol", type="string", length=3)
+     */
+    private $symbol;
+
+    /**
      * @param string $name
      * @param string $abbr
      * @return \Ddx\Dr\MarketBundle\Entity\Asset

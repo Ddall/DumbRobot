@@ -18,13 +18,13 @@ class LoadAssetsData implements FixtureInterface{
      */
     public function load(ObjectManager $manager){
         $data = array(
-            'Euro' => 'EUR',
-            'Dollar' => 'USD',
-            'Bitcoin' => 'BTC',
-            'Litecoin' => 'LTC',
-            'Dogecoin' => 'DOGE',
-            'Pound' => 'GBP',
-            'Yen' => 'JPY',
+            'Euro' => array('EUR', '€'),
+            'Dollar' => array('USD', '$'),
+            'Bitcoin' => array('BTC', '฿'),
+            'Litecoin' => array('LTC', 'Ł'),
+            'Dogecoin' => array('DOGE', 'Ð'),
+            'Pound' => array('Pound', '£'),
+            'Yen' => array('JPY', '¥'),
         );
         
         $entities = array();

@@ -36,13 +36,22 @@ class Asset
     private $abbr;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="symbol", type="string", length=3)
+     */
+    private $symbol;
+
+    /**
      * @param string $name
      * @param string $abbr
+     * @param string $symbol
      * @return \Ddx\Dr\MarketBundle\Entity\Asset
      */
-    public function __construct($name = null, $abbr = null) {
+    public function __construct($name = null, $abbr = null, $symbol = null) {
         $this->setName($name);
         $this->setAbbr($abbr);
+        $this->setSymbol($symbol);
         
         return $this;
     }
@@ -51,6 +60,10 @@ class Asset
      * @return string
      */
     public function __toString() {
+        if($this->getSymbol()){
+            return $this->getSymbol();
+        }
+        
         return $this->getAbbr();
     }
     
@@ -108,5 +121,28 @@ class Asset
     public function getAbbr()
     {
         return $this->abbr;
+    }
+
+    /**
+     * Set symbol
+     *
+     * @param string $symbol
+     * @return Asset
+     */
+    public function setSymbol($symbol)
+    {
+        $this->symbol = $symbol;
+
+        return $this;
+    }
+
+    /**
+     * Get symbol
+     *
+     * @return string 
+     */
+    public function getSymbol()
+    {
+        return $this->symbol;
     }
 }

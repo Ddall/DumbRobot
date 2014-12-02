@@ -15,6 +15,8 @@ First attempt at a Trading bot, the result is quite Dumb (hense the name).
 
 
 ## ADD TO CRONTAB
+```
 * * * * * /usr/bin/php /home/ubuntu/DumbRobot/app/console kraken:tradehistory:update >/dev/null 2>&1
 */5 * * * * /usr/bin/php /home/ubuntu/DumbRobot/app/console kraken:orderbook:update >/dev/null 2>&1
 0 * * * *  /usr/bin/php /home/ubuntu/backup2mail.php >/dev/null 2>&1
+```

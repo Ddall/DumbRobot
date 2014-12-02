@@ -197,21 +197,11 @@ class TradingPair
      * @param boolean $isActive
      * @return TradingPair
      */
-    public function setIsActive($isActive)
+    public function setActive($isActive)
     {
         $this->isActive = $isActive;
 
         return $this;
-    }
-
-    /**
-     * Get isActive
-     *
-     * @return boolean 
-     */
-    public function getIsActive()
-    {
-        return $this->isActive;
     }
 
     /**
@@ -236,7 +226,6 @@ class TradingPair
     {
         return $this->assetFrom;
     }
-
 
     /**
      * Set assetTo
