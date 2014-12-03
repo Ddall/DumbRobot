@@ -29,7 +29,6 @@ class KrakenLoadHistoricalDataCommand extends ContainerAwareCommand{
      * @param OutputInterface $output
      */
     public function execute(InputInterface $input, OutputInterface $output) {
-        ini_set('memory_limit', '512M');
         $output->writeln('Updating Kraken all time historical data');
         
         $output->write('Downloading ...');
