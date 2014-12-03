@@ -4,6 +4,7 @@
  * @author Allan
  */
 namespace Ddx\Dr\ReaderBundle\Command;
+    
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputOption;
@@ -13,6 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Ddx\Dr\MarketBundle\Entity\Trade;
 
 class KrakenLoadHistoricalDataCommand extends ContainerAwareCommand{
+    
     
     protected function configure() {
         $this
@@ -27,6 +29,7 @@ class KrakenLoadHistoricalDataCommand extends ContainerAwareCommand{
      * @param OutputInterface $output
      */
     public function execute(InputInterface $input, OutputInterface $output) {
+        ini_set('memory_limit', '512M');
         $output->writeln('Updating Kraken all time historical data');
         
         $output->write('Downloading ...');
@@ -73,11 +76,11 @@ class KrakenLoadHistoricalDataCommand extends ContainerAwareCommand{
                     ;
                     
             $em->persist($e);
-            $em->flush();
             $i++;
             
         }
-        
+        $output->write(' DB: ');
+        $em->flush();
         $output->write('Flushed ' . $i . ' to the database');
 //        
     }
