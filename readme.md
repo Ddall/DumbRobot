@@ -1,6 +1,8 @@
 #DdxDr
 First attempt at a Trading bot, the result is quite Dumb (hense the name).
 
+![insightbadge](https://insight.sensiolabs.com/projects/c57ea668-3cf7-465e-95e2-bf1ed845b719/big.png)
+
 ## First start
 
 * composer update ``php composer update``
