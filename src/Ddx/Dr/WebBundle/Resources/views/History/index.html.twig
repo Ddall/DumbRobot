@@ -2,34 +2,10 @@
 {% extends "::base.html.twig" %}
 {% block body %}
     <div class="row">
-        <div class="col-md-12">
-            <h1>Weighted data (5 minutes increments)</h1>
-            <table class="table table-striped table-striped table-condensed">
-                <thead>
-                    <tr>
-                        <th>Time</th>
-                        <th>Weighted price</th>
-                        <th>Volume</th>
-                        <th>Number of trades</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    
-            (SUM(wPrice) / SUM(volume)) vwap,
-            SUM(volume) as volume,
-            MIN(timeRemote) as period,
-            COUNT(id) as nTrades
-                    {% for trade in vwapData %}
-                    <tr>
-                        <td>{{ trade.period|date( format_datetime ) }}</td>
-                        <td>{{ trade.vwap }} €</td>
-                        <td>{{ trade.volume }} BTC</td>
-                        <td>{{ trade.nTrades }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+{#        <div id="graphData" class="hidden">{{ graphData}}</div>#}
+        <div id="graphData" class="hidden">["value": 10, "date": "2014-05-10","value": 20, "date": "2014-15-11"]</div>
+        
+        <div class="col-md-12" id="graph"></div>
     </div>
     <div class="row">
         <div class="col-md-6">
@@ -57,26 +33,51 @@
         </div>
                 
         <div class="col-md-6">
-            <h1>5 min avg:</h1>
-            <table class="table table-striped table-hover table-condensed">
+            <h1>Weighted data</h1>
+            <table class="table table-striped table-striped table-condensed">
                 <thead>
                     <tr>
                         <th>Time</th>
+                        <th>Weighted price</th>
                         <th>Volume</th>
-                        <th>Average price</th>
+                        <th>Number of trades</th>
                     </tr>
                 </thead>
                 <tbody>
-   {#         {% for trade in avg5Min %}
-                <tr>
-                    <td>{{ trade.timeRemote|date( format_datetime ) }}</td>
-                    <td>{{ trade.volume }} {{ trade.assetFrom }}</td>
-                    <td>{{ trade.price }} {{trade.assetTo }} </td>
-                    <td>{{ trade.direction }} {{ trade.orderType }}</td>
-                </tr>
-            {% endfor %}#}
+                    {% for trade in vwapData %}
+                    <tr>
+                        <td>{{ trade.period|date( format_datetime ) }}</td>
+                        <td>{{ trade.vwap }} €</td>
+                        <td>{{ trade.volume }} BTC</td>
+                        <td>{{ trade.nTrades }}</td>
+                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
+
         </div>
     </div>
+{% endblock %}
+{% block javascripts %}
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.min.js' charset='utf-8'></script>
+    <script type="text/javascript">
+        $('document').ready(function(){
+            
+            var data = JSON.parse( '["value": 10, "date": "2014-05-10","value": 20, "date": "2014-15-11"]');
+            
+            data_graphic({
+              title: "Historical Prices",
+              chart_type:'line',
+              data: data,
+              width: 400,
+              height: 250,
+              target: "#graph",
+              x_accessor: "value",
+              y_accessor: "date",
+              interpolate: "monotone"
+            });
+            
+            
+        });
+    </script>
 {% endblock %}

@@ -119,9 +119,40 @@ class Trade
         return $this->getTradingPair()->getAssetTo();
     }
     
+    
+    /**
+     * @return array
+     */
+    public function toArray(){
+        return array(
+//            'timestamp' => $this->getTimeRemote()->format('d/m/Y H:i:s'),
+            'timestamp' => $this->getId(),
+            'price' =>  $this->getPrice(),
+            'volume' => $this->getVolume(),
+        );
+    }
+    
+    /**
+     * @return array
+     */
+    public function toPriceArray(){
+        return array(
+            'timestamp' => $this->getTimeRemote()->format('d/m/Y H:i:s'),
+            'price'  => $this->getPrice(),
+        );
+    }
+    
+    /**
+     * @return array
+     */
+    public function toVolumeArray(){
+        return array(
+            'timestamp'  => $this->getTimeRemote()->format('d/m/Y H:i:s'),
+            'volume'    => $this->getVolume(),
+        );
+    }
+    
     // AUTO METHODS
-
-  
 
     /**
      * Get id

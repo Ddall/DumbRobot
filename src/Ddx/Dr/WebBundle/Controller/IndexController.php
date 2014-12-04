@@ -18,11 +18,17 @@ class IndexController extends Controller{
         $tradingRepo = $this->getHelper()->getTradeRepository();
         
         $allTrades = $kraken->getTrades();
-        $avg5 = $tradingRepo->getWeightedData($kraken, $kraken->getActiveTradingPairs()->first(), 300);
-
+        $vwap = $tradingRepo->getWeightedData($kraken, $kraken->getActiveTradingPairs()->first(), 300);
+        
+        $tmp = array();
+        foreach($allTrades as $trade){
+            $tmp[] = $trade->toArray();
+        }
+        
         return $this->render('DdxDrWebBundle:History:index.html.twig', array(
             'allTrades' => $allTrades,
-            'vwapData' => $avg5
+            'vwapData' => $vwap,
+            'graphData' => json_encode($tmp),
         ));
     }
 
