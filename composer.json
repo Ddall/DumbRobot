@@ -2,13 +2,13 @@
     "name": "ddall/ddx-dumb-robot",
     "license": "MIT",
     "type": "project",
-    "description": "A completly dumb Bitcoin trading bot",
+    "description": "A completly dumb Bitcoin trading tool",
     "autoload": {
         "psr-0": { "": "src/", "SymfonyStandard": "app/" }
     },
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": "2.5.*",
+        "symfony/symfony": "2.6.*",
         "doctrine/orm": "~2.2,>=2.2.3",
         "doctrine/doctrine-bundle": "~1.2",
         "doctrine/doctrine-fixtures-bundle": "2.2.*",
