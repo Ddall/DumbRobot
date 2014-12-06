@@ -44,7 +44,6 @@ class TradeRepository extends EntityRepository
      * @return array
      */
     public function getWeightedData(Market $market, TradingPair $pair, $interval = 300){
-        $rsm = new ResultSetMapping();
         $sql = 'SELECT 
             (SUM(wPrice) / SUM(volume)) vwap,
             SUM(volume) as volume,
@@ -59,12 +58,12 @@ class TradeRepository extends EntityRepository
             GROUP BY ROUND(UNIX_TIMESTAMP(timeRemote) / :interval);
             ';
         
-        $q = $this->getEntityManager()->createNativeQuery($sql, $rsm);
-        $q
-                ->setParameter('m_id', $market->getId())
-                ->setParameter('t_id', $pair->getId())
-                ->setParameter('interval', $interval)
-                ;
-        return $q->getResult();
+        $statement = $this->getEntityManager()->getConnection()->executeQuery($sql, array(
+            'm_id' => $market->getId(),
+            't_id' => $pair->getId(),
+            'interval' => $interval,
+        ));
+        
+        return $statement->fetchAll();
     }
 }
