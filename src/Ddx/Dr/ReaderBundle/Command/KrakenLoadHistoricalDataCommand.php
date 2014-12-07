@@ -30,7 +30,8 @@ class KrakenLoadHistoricalDataCommand extends ContainerAwareCommand{
      */
     public function execute(InputInterface $input, OutputInterface $output) {
         $output->writeln('Updating Kraken all time historical data');
-        
+        $this->count = 0;
+                
         $output->write('Downloading ...');
         
         if(file_exists('historical.csv') === false){
@@ -64,7 +65,6 @@ class KrakenLoadHistoricalDataCommand extends ContainerAwareCommand{
         
         $i = 0;
         while( ($line =fgetcsv($file)) !== FALSE ){
-            
             $e = new Trade();
             $e
                     ->setMarket($market)
@@ -75,12 +75,31 @@ class KrakenLoadHistoricalDataCommand extends ContainerAwareCommand{
                     ;
                     
             $em->persist($e);
-            $i++;
+            $i++;            
+            
+            $output->write( $this->flushHelper() );
             
         }
-        $output->write(' DB: ');
+        
         $em->flush();
         $output->write('Flushed ' . $i . ' to the database');
-//        
+    }
+    
+    /**
+     * @var integer 
+     */
+    private $count;
+    
+    /**
+     * @return string
+     */
+    private function flushHelper(){
+        if($this->count > 5000){
+            $this->getContainer()->get('doctrine')->getManager()->flush();
+            $this->count = 0;
+            return ' FLUSH' . PHP_EOL;
+        }else{
+            return '.';
+        }
     }
 }
