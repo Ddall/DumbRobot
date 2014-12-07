@@ -5,11 +5,13 @@
         <div class="col-md-2">
             <h2>OHLC Data</h2>
         </div>
-        <div style="height: 300px;" class="col-md-10" id="graphContainer"></div>
+        <div style="height: 300px;" class="col-md-10" id="graphContainer">
+            <div id="linechart" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+        </div>
     </div>
 {% endblock %}
 {% block javascripts %}
-    <script type="text/javascript">
-       
+   <script type="text/javascript">
+        {{ chart(chart) }}
     </script>
 {% endblock %}

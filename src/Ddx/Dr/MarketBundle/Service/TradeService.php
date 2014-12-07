@@ -49,8 +49,29 @@ class TradeService extends AbstractDdxDrService {
      * @return array
      */
     public function getAvgTrades(Market $market, TradingPair $pair, $interval = 300){
-        $trades = $this->getTradeRepository()->get5MinAverage($market, $pair, $interval);
+        $trades = $this->getTradeRepository()->getWeightedData($market, $pair, $interval);
         return $trades;
     }
     
+    /**
+     * Enriche
+     * @param Market $market
+     * @param TradingPair $pair
+     */
+    public function computeTrades(Market $market, TradingPair $pair){
+        $trades = $this->getAvgTrades($market, $pair, 3600);
+        $priceOnly = array();
+        
+        foreach($trades as $key => $trade){
+            $priceOnly[$key] = $trade['vwap'];
+        }
+        
+        $fuse = trader_wma($priceOnly, 24*3);
+        
+        foreach($fuse as $key => $value){
+            $trade[$key]['vwap_3d'] = $value;
+        }
+        
+        return $fuse;
+    }
 }

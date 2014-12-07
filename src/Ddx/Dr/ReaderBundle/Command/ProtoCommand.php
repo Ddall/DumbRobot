@@ -31,6 +31,14 @@ class ProtoCommand extends ContainerAwareCommand {
          * @var \Ddx\Dr\ReaderBundle\Service\BaseHelper
          */
         $base = $this->getContainer()->get('ddx.helper');
-        $base->getManager();
+        $kraken = $base->getMarketRepository()->find(1);
+        
+        $data = $base->getTradeService()->computeTrades($kraken, $kraken->getActiveTradingPairs()->first());
+        
+        
+        $output->writeln(print_r($data, true));
+        
+        
+        
     }
 }

@@ -83,6 +83,7 @@ class TradeRepository extends EntityRepository
             SUM(volume) AS volume,
             COUNT(id) AS nTrades,
             MIN(timeRemote) as period,
+            UNIX_TIMESTAMP(MIN(timeRemote)) as period_unix,
             MAX(price) as high,
             MIN(price) as low,
             MIN(id) as op_id,
@@ -96,7 +97,7 @@ class TradeRepository extends EntityRepository
             GROUP BY ROUND(UNIX_TIMESTAMP(timeRemote) / 600)
         )as virtual
         INNER JOIN trade as tr1 on op_id = tr1.id 
-        INNER JOIN trade as tr2 on cl_id = tr2.id 
+        INNER JOIN trade as tr2 on cl_id = tr2.id
             ';
         
         $statement = $this->getEntityManager()->getConnection()->executeQuery($sql, array(
