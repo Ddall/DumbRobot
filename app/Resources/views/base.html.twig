@@ -3,8 +3,6 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}DdxDR{% endblock %}</title>
-        <link rel="stylesheet" href="{{ asset('bundles/ddxdrweb/css/highlightjs-default.css') }}">
-        <link rel="stylesheet" href="{{ asset('bundles/ddxdrweb/css/metricsgraphics.css') }}">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
@@ -13,7 +11,8 @@
         <div class="container-fluid">{% block body %}{% endblock %}</div>
         <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
         <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="{{ asset('bundles/ddxdrweb/js/metricsgraphics.min.js') }}"></script>
+        <script src="//code.highcharts.com/4.0.1/highcharts.js"></script>
+        <script src="//code.highcharts.com/4.0.1/modules/exporting.js"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>
