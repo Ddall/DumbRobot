@@ -66,4 +66,46 @@ class TradeRepository extends EntityRepository
         
         return $statement->fetchAll();
     }
+    
+    /**
+     * Returns OHLC data
+     * @param Market $market
+     * @param TradingPair $pair
+     * @param integer $interval number of seconds
+     * @return array
+     */
+    public function getOHLCData(Market $market, TradingPair $pair, $interval = 300){
+                $sql = '
+        SELECT virtual.vwap, virtual.volume, virtual.nTrades, virtual.period, virtual.high, virtual.low, tr1.price as open, tr2.price as close
+        FROM 
+        (
+            SELECT (SUM(wPrice)/ SUM(volume)) AS vwap,
+            SUM(volume) AS volume,
+            COUNT(id) AS nTrades,
+            MIN(timeRemote) as period,
+            MAX(price) as high,
+            MIN(price) as low,
+            MIN(id) as op_id,
+            MAX(id) as cl_id
+            FROM (
+            SELECT (volume * price) as wPrice,
+            price, volume, timeRemote, market_id, tradingPair_id, id
+            FROM trade) as vTrade
+            WHERE market_id = 1
+            AND tradingPair_id = 9
+            GROUP BY ROUND(UNIX_TIMESTAMP(timeRemote) / 600)
+        )as virtual
+        INNER JOIN trade as tr1 on op_id = tr1.id 
+        INNER JOIN trade as tr2 on cl_id = tr2.id 
+            ';
+        
+        $statement = $this->getEntityManager()->getConnection()->executeQuery($sql, array(
+            'm_id' => $market->getId(),
+            't_id' => $pair->getId(),
+            'interval' => $interval,
+        ));
+        
+        return $statement->fetchAll();
+    }
+    
 }
