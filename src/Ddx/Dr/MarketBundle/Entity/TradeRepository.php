@@ -76,14 +76,14 @@ class TradeRepository extends EntityRepository
      */
     public function getOHLCData(Market $market, TradingPair $pair, $interval = 300){
                 $sql = '
-        SELECT virtual.vwap, virtual.volume, virtual.nTrades, virtual.period, virtual.high, virtual.low, tr1.price as open, tr2.price as close
+        SELECT virtual.vwap, virtual.volume, virtual.nTrades, virtual.period, virtual.high, virtual.low, tr1.price as open, tr2.price as close,
+        UNIX_TIMESTAMP(virtual.period) as period_unix
         FROM 
         (
             SELECT (SUM(wPrice)/ SUM(volume)) AS vwap,
             SUM(volume) AS volume,
             COUNT(id) AS nTrades,
             MIN(timeRemote) as period,
-            UNIX_TIMESTAMP(MIN(timeRemote)) as period_unix,
             MAX(price) as high,
             MIN(price) as low,
             MIN(id) as op_id,
@@ -92,9 +92,9 @@ class TradeRepository extends EntityRepository
             SELECT (volume * price) as wPrice,
             price, volume, timeRemote, market_id, tradingPair_id, id
             FROM trade) as vTrade
-            WHERE market_id = 1
-            AND tradingPair_id = 9
-            GROUP BY ROUND(UNIX_TIMESTAMP(timeRemote) / 600)
+            WHERE market_id = :m_id
+            AND tradingPair_id = :t_id
+            GROUP BY ROUND(UNIX_TIMESTAMP(timeRemote) / :interval)
         )as virtual
         INNER JOIN trade as tr1 on op_id = tr1.id 
         INNER JOIN trade as tr2 on cl_id = tr2.id

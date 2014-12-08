@@ -6,8 +6,7 @@ namespace Ddx\Dr\WebBundle\Controller;
  */
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-//use Ob\HighchartsBundle\Highcharts\Highstock;
-use Ob\HighchartsBundle\Highcharts\Highchart;
+use Ob\HighchartsBundle\Highcharts\Highstock;
 
 class IndexController extends Controller{
 
@@ -41,30 +40,54 @@ class IndexController extends Controller{
     /**
      * route /kraken/ohlc
      * https://github.com/marcaube/ObHighchartsBundle/blob/master/Resources/doc/usage.md
+     * http://api.highcharts.com/highstock#series.data
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function krakenOHLCAction(){
         $kraken = $this->getHelper()->getMarketRepository()->find(1);
-        $data = $this->getHelper()->getTradeRepository()->getOHLCData($kraken, $kraken->getActiveTradingPairs()->first(), 600 );
-        die('<pre>'.print_r($data, true));
-        $out = array();
-        foreach($data as $i){
-            $out[] = $i['vwap'];
+        $data = $this->getHelper()->getTradeRepository()->getOHLCData($kraken, $kraken->getActiveTradingPairs()->first(), 300 );
+        
+        $ohlc = array();
+        $volume = array();
+        foreach($data as $line){
+            $ohlc[] = array(
+                (integer) $line['period_unix']*1000,
+                (integer) $line['open'],
+                (integer) $line['high'],
+                (integer) $line['low'],
+                (integer) $line['close'],
+            );
+            
+            $volume[] = (integer)$line['volume'];
         }
         
         $series = array(
-            'name'  => 'OHLC',
-            'data'  => $out,
+            array(
+                'name' => 'OHLC',
+                'type' => 'candlestick',
+                'dataGrouping' => array(
+                    'units' => array(
+                        array('week', array(1)),
+                        array('month', array(1,3,6)),
+                        array('year', array(1))
+                    )
+                ),
+                'data' => $ohlc,
+            ),
+            
         );
         
-        $ch = new Highchart();
-        $ch->chart->renderTo('linechart');
-        $ch->title->text('Kraken all time OHLC DATA');
-        $ch->series($series);
+        
+        $ob = new Highstock();
+        $ob->chart->renderTo('linechart');
+        $ob->chart->title('Kraken historical data');
+        $ob->xAxis->title('Time');
+        $ob->yAxis->title('Price');
+        $ob->series($series);
+        $ob->rangeSelector->selected('2');
 
         return $this->render('DdxDrWebBundle:History:ohlc.html.twig', array(
-            'data' => $data,
-            'chart' => $ch
+            'chart' => $ob
         ));
     }
     
