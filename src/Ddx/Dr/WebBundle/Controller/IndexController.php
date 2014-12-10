@@ -45,7 +45,7 @@ class IndexController extends Controller{
      */
     public function krakenOHLCAction(){
         $kraken = $this->getHelper()->getMarketRepository()->find(1);
-        $data = $this->getHelper()->getTradeRepository()->getOHLCData($kraken, $kraken->getActiveTradingPairs()->first(), 300 );
+        $data = $this->getHelper()->getTradeRepository()->getOHLCData($kraken, $kraken->getActiveTradingPairs()->first(), 3600 );
         
         $ohlc = array();
         $volume = array();
@@ -62,11 +62,16 @@ class IndexController extends Controller{
         }
         
         $series = array(
-            array(
+            'ohlc' => array(
                 'name' => 'OHLC',
                 'type' => 'candlestick',
+                'tooltip' => array(
+                    'valueDecimals' => 2,
+                ),
                 'dataGrouping' => array(
                     'units' => array(
+                        array('hour', array(1)),
+                        array('day', array(1,3)),
                         array('week', array(1)),
                         array('month', array(1,3,6)),
                         array('year', array(1))
@@ -74,7 +79,10 @@ class IndexController extends Controller{
                 ),
                 'data' => $ohlc,
             ),
-            
+            // http://www.highcharts.com/stock/demo/candlestick-and-volume
+//            'volume' => array(
+//                
+//            )
         );
         
         
@@ -82,12 +90,12 @@ class IndexController extends Controller{
         $ob->chart->renderTo('linechart');
         $ob->chart->title('Kraken historical data');
         $ob->xAxis->title('Time');
-        $ob->yAxis->title('Price');
+        $ob->yAxis->label('Price');
         $ob->series($series);
-        $ob->rangeSelector->selected('2');
 
         return $this->render('DdxDrWebBundle:History:ohlc.html.twig', array(
-            'chart' => $ob
+            'data' => $data,
+            'chart' => $ob,
         ));
     }
     

@@ -83,7 +83,7 @@ class TradeRepository extends EntityRepository
             SELECT (SUM(wPrice)/ SUM(volume)) AS vwap,
             SUM(volume) AS volume,
             COUNT(id) AS nTrades,
-            MIN(timeRemote) as period,
+            MAX(timeRemote) as period,
             MAX(price) as high,
             MIN(price) as low,
             MIN(id) as op_id,
