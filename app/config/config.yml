@@ -81,3 +81,4 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: Ddx\Dr\UserBundle\Entity\User
+    
