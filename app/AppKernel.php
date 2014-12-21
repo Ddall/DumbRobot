@@ -21,6 +21,8 @@ class AppKernel extends Kernel
             new Ddx\Dr\MarketBundle\DdxDrMarketBundle(),
             new Ddx\Dr\WebBundle\DdxDrWebBundle(),
             new Ob\HighchartsBundle\ObHighchartsBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
+            new Ddx\Dr\UserBundle\DdxDrUserBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

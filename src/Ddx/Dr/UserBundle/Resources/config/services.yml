@@ -1,0 +1,4 @@
+services:
+#    ddx_dr_user.example:
+#        class: Ddx\Dr\UserBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

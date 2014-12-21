@@ -21,7 +21,8 @@
         "beberlei/DoctrineExtensions": "0.1",
         "incenteev/composer-parameter-handler": "~2.0",
         "payward/kraken-api-client": "dev-master#6af477bb9c3c6d4ee83961dfa042a45a239fea59",
-        "ob/highcharts-bundle": "1.2.*@dev"
+        "ob/highcharts-bundle": "1.2.*@dev",
+        "friendsofsymfony/user-bundle": "1.3.*@dev"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
