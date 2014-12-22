@@ -79,10 +79,11 @@ class IndexController extends Controller{
                 ),
                 'data' => $ohlc,
             ),
-            // http://www.highcharts.com/stock/demo/candlestick-and-volume
-//            'volume' => array(
-//                
-//            )
+//             http://www.highcharts.com/stock/demo/candlestick-and-volume
+            'volume' => array(
+                'name' => 'Volume',
+                'data' => $volume,
+            )
         );
         
         
