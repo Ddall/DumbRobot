@@ -3,8 +3,12 @@ ddxdr_kraken_history:
     methods: [ get ]
     defaults: { _controller: DdxDrWebBundle:Index:krakenHistory }
     
-    
 ddxdr_kraken_ohlc:
     path:     /kraken/ohlc
     methods: [ get ]
     defaults: { _controller: DdxDrWebBundle:Index:krakenOHLC }
+
+ddxdr_index:
+    path:     /
+    methods: [ get ]
+    defaults: { _controller: DdxDrWebBundle:Index:index }

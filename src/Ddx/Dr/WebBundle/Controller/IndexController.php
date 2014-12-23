@@ -9,7 +9,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Ob\HighchartsBundle\Highcharts\Highstock;
 
 class IndexController extends Controller{
-
+    
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function indexAction(){
+        
+        return $this->render('DdxDrWebBundle:Index:index.html.twig', array(
+        ));
+    }
+    
     /**
      * route /kraken/history
      * @return \Symfony\Component\HttpFoundation\Response
