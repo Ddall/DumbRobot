@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             new Ob\HighchartsBundle\ObHighchartsBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Ddx\Dr\UserBundle\DdxDrUserBundle(),
+            new Ddx\Dr\StrategyBundle\DdxDrStrategyBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
