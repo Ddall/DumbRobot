@@ -35,6 +35,9 @@ twig:
         format_datetime: "d/m/Y H:i:s"
         format_time: "H:i:s" 
 
+    form:
+        resources: ['bootstrap_3_layout.html.twig']
+
 # Assetic Configuration
 assetic:
     debug:          "%kernel.debug%"

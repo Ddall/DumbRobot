@@ -1,17 +1,18 @@
 {# DdxDrWebBundle:History:index.html.twig #}
 {% extends "::base.html.twig" %}
-{% block title %}OHLC{% endblock %}
+{% block title %}OHLC Breakdown{% endblock %}
 {% block body %}
+    <h2>OHLC Data</h2>
     <div class="row">
-        <div class="col-md-2">
-            <h2>OHLC Data</h2>
-        </div>
         <div style="height: 400px;" class="col-md-10" id="graphContainer">
             <div id="linechart" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
         </div>
+        <div class="col-md-2">
+            <button data-target="ohlc-data" class="btn btn-inverse toogleControl">Tooggle data</button>
+        </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="toogleElement" id="ohlc-data" class="col-md-12">
             <table class="table table-condensed table-hover table-striped">
                 <thead>
                     <tr>

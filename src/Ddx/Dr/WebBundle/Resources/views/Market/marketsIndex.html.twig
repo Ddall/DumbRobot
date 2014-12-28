@@ -1,0 +1,41 @@
+{# DdxDrWebBundle:Market:marketsIndex.html.twig #}
+{% extends "::base.html.twig" %}
+{% block title %}{{ parent() }} - Listed Markets{% endblock %} 
+{% block body %}
+    <h1>Listed Markets</h1>
+    <div class="row-fluid">
+        <table class="table table-condensed table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Worker enabled</th>
+                    <th># Available pairs</th>
+                    <th># Active pairs</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for market in markets %}
+                    <tr class="clickable" data-id="{{ market.id }}" data-target="market">
+                        <td>{{ market.id }}</td>
+                        <td>{{ market.name }}</td>
+                        <td></td>
+                        <td>{{ market.tradingPairs|length }}</td>
+                        <td>{{ market.activeTradingPairs|length }}</td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.clickable').click(function(){
+                window.url = "{{ path('ddxdr_index') }}"+ $(this).data('target');
+            });
+        });
+    </script>
+{% endblock %}

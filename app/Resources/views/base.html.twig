@@ -23,8 +23,10 @@
                 <div class="collapse navbar-collapse" id="ddxdr-main-nav">
                 <ul class="nav navbar-nav">
                     {% if is_granted('ROLE_USER') %}
-                    <li class="active"><a href="{{ path('ddrdx_index') }}">Home <span class="sr-only">(current)</span></a></li>
-                    <li><a href="#">Link</a></li>
+                    <li class="active"><a href="{{ path('ddxdr_index') }}">Home <span class="sr-only">(current)</span></a></li>
+                    <li><a href="{{ path('ddxdr_marketsIndex') }}">Markets</a></li>
+                    <li><a href="{{ path('ddxdr_kraken_history') }}">History</a></li>
+                    <li><a href="{{ path('ddxdr_kraken_ohlc') }}">OHLC Breakdown</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
@@ -49,11 +51,12 @@
             </div><!-- /.container-fluid -->
         </nav>
         <div class="container-fluid">{% block body %}{% endblock %}</div>
-        <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script type="text/javascript" src="{{ asset('bundles/ddxdrweb/css/bootstrap.min.css') }}"></script>
         <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
         <script src="http://code.highcharts.com/stock/highstock.js"></script>
         <script src="http://code.highcharts.com/stock/modules/exporting.js"></script>
         <script src="{{ asset('bundles/ddxdrweb/js/highstock.darktheme.js') }}"></script>
+        {% include '::main.js.twig' %}
         {% block javascripts %}{% endblock %}
     </body>
 </html>

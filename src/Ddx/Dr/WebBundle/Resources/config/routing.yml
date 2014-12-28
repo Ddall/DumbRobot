@@ -1,3 +1,4 @@
+#WIP ROUTES
 ddxdr_kraken_history:
     path:     /kraken/history
     methods: [ get ]
@@ -7,6 +8,13 @@ ddxdr_kraken_ohlc:
     path:     /kraken/ohlc
     methods: [ get ]
     defaults: { _controller: DdxDrWebBundle:Index:krakenOHLC }
+    
+#DEFINIVE ROUTES
+ddxdr_marketsIndex:
+    path:   /markets
+    methods:    [ get ]
+    defaults : { _controller: DdxDrWebBundle:Market:marketsIndex }
+       
 
 ddxdr_index:
     path:     /

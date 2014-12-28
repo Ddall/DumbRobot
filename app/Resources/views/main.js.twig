@@ -1,0 +1,12 @@
+{# ::main.js.twig #}
+<script type="text/javascript">
+{% block pureJS %}{% endblock %}
+    $(document).ready(function(){
+        {# TOGGLE ELEMENT use .toggleControl w/ data-target=#_TARGET_  #}
+        $('.toogleControl').click(function(){
+            var target = $(this).data('target');
+            $(target).toggle();
+        });
+    {% block documentReady %}{% endblock %}
+    });
+</script>
