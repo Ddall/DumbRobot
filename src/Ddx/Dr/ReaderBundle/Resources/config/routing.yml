@@ -1,3 +1,0 @@
-ddx_dr_reader_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: DdxDrReaderBundle:Default:index }

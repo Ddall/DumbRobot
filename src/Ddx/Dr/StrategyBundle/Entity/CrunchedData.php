@@ -29,7 +29,7 @@ class CrunchedData
     private $startPeriod;
 
     /**
-     * @var integer
+     * @var integer value in seconds
      *
      * @ORM\Column(name="duration", type="integer")
      */
