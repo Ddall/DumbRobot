@@ -1,3 +1,0 @@
-ddx_dr_strategy_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: DdxDrStrategyBundle:Default:index }
