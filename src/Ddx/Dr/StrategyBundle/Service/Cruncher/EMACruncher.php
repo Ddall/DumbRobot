@@ -30,7 +30,7 @@ class EMACruncher extends AbstractCruncherService{
         }
         
         if(!key_exists(self::WORK_PERIOD, $parameters)){
-            $parameters[self::WORK_PERIOD] = null;
+            $parameters[self::WORK_PERIOD] = null; // _TD Make this dynamic
         }
     }
 }

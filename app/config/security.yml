@@ -12,7 +12,7 @@ security:
             pattern : ^/login$
             anonymous: true
             logout: true
-#            default_target_path: ^/
+
             
         main:
             pattern: ^/
@@ -26,16 +26,17 @@ security:
             
 #        dev:
 #            pattern: ^/(_(profiler|wdt)|css|images|js)/
-#            security: true
 #            anonymous: false
+#            security: true
+#            
 #            
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/_profiler, role: ROLE_ADMIN }
-        - { path: ^/wdt, role: ROLE_ADMIN }
-        - { path: ^/admin/, role: ROLE_ADMIN }
+#        - { path: ^/_profiler, role: ROLE_ADMIN }
+#        - { path: ^/wdt, role: ROLE_ADMIN }
+#        - { path: ^/admin/, role: ROLE_ADMIN }
         - { path: ^/$, role: ROLE_USER }
 
 

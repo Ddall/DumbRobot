@@ -33,14 +33,17 @@ class IndexController extends Controller{
         $vwap = $tradingRepo->getWeightedData($kraken, $kraken->getActiveTradingPairs()->first(), 300);
         
         $tmp = array();
-        foreach($allTrades as $trade){
-            $tmp[] = array(
-                'x' => $trade->getTimeRemote(),
-                'y' => $trade->getVolume(),
-            );
+        die('<pre>' . print_r(gettype($allTrades->toArray()), true));
+//        
+        foreach($allTrade->toArray()  as $trade){
+            die('lol');
+//            $tmp[] = array(
+//                'x' => $trade->getTimeRemote(),
+//                'y' => $trade->getVolume(),
+//            );
         }
         
-
+die('lolilol');
         return $this->render('DdxDrWebBundle:History:index.html.twig', array(
             'allTrades' => $allTrades,
             'vwapData' => $vwap,

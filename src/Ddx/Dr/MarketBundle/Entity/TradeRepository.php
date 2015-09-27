@@ -42,7 +42,7 @@ class TradeRepository extends EntityRepository
      * @param integer $interval (in seconds)
      * @return array
      */
-    public function getWeightedData(Market $market, TradingPair $pair, $interval = 300){
+    public function getWeightedData(Market $market, TradingPair $pair, $interval = 300, $offset = 0, $limit = 10){
         $sql = 'SELECT 
             (SUM(wPrice) / SUM(volume)) vwap,
             SUM(volume) as volume,
@@ -54,13 +54,16 @@ class TradeRepository extends EntityRepository
                 FROM trade) as vTrade
             WHERE market_id = :m_id
             AND tradingPair_id = :t_id
-            GROUP BY ROUND(UNIX_TIMESTAMP(timeRemote) / :interval);
+            GROUP BY ROUND(UNIX_TIMESTAMP(timeRemote) / :interval)
+            LIMIT p_limit;
             ';
         
         $statement = $this->getEntityManager()->getConnection()->executeQuery($sql, array(
             'm_id' => $market->getId(),
             't_id' => $pair->getId(),
             'interval' => $interval,
+//            'p_offset' => $offset,
+//            'p_limit' => $limit
         ));
         
         return $statement->fetchAll();
