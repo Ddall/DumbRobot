@@ -26,11 +26,11 @@ class EMACruncher extends AbstractCruncherService{
     
     protected function handleParameters($parameters){
         if(!is_array($parameters)){
-            throw new Exception('EmaCruncher::handleParameters wrong format');
+            throw new \Exception('EmaCruncher::handleParameters wrong format');
         }
         
-        if(!key_exists(self::WORK_PERIOD, $parameters)){
-            $parameters[self::WORK_PERIOD] = null; // _TD Make this dynamic
+        if(!array_key_exists(self::WORK_PERIOD, $parameters)){
+            $parameters[self::WORK_PERIOD] = null;
         }
     }
 }

@@ -111,4 +111,14 @@ class TradeRepository extends EntityRepository
         return $statement->fetchAll();
     }
     
+    /**
+     * This method will return the averaged data for each $interval
+     * @param Market $market
+     * @param TradingPair $pair
+     * @param type $interval (seconds)
+     */
+    public function getNormalizedData(Market $market, TradingPair $pair, $interval = 3600){
+        
+    }
+    
 }
